@@ -9,5 +9,7 @@
     <dimen name="mainmenu_cardview_margin">1dp</dimen>
     <dimen name="login_page_margin">20dp</dimen>
     <dimen name="login_page_margin1">10dp</dimen>
+    <dimen name="mainpage_cardview_textsize">10dp</dimen>
+    <dimen name="mainpage_cardview_icon_size">60dp</dimen>
     <dimen name="design_navigation_separator_vertical_padding" tools:override="true">0dp</dimen>
 </resources>

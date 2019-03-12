@@ -11,6 +11,13 @@
     <string name="login_page_text1">Welcome to CIVIL GATE</string>
     <string name="login_page_reg_text">Don\'t have an account?</string>
     <string name="login_page_reg_text1">Register Here</string>
+
+    <string name="home_page_cardview_offer"><b>GATE-2019 + GATE-2020 Online \n Test Series</b>
+        \n <p>GATE-2019 + GATE-2020 Online \n Test Series</p></string>
+
+    <string name="home_page_cardview_upcoming_test"><b>No upcoming test available</b>
+        </string>
+
     <string-array name="login_type_spinner">
         <item>Select course</item>
         <item>gate</item>

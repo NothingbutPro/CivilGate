@@ -67,7 +67,7 @@
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:layout_margin="@dimen/mainmenu_cardview_margin"
             android:padding="@dimen/mainmenu_cardview_paddin"
@@ -76,21 +76,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/reel1"
+                android:layout_gravity="center"
                 android:orientation="vertical"
-                android:weightSum="1"
+
                 >
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/face_clip"
+                android:layout_height="@dimen/mainpage_cardview_icon_size"
+                android:src="@drawable/buy_package_icon"
                 android:layout_gravity="center"
                 />
-
-
-            <TextView
+                <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="abc"
+                android:text="Buy Package"
+                android:textSize="@dimen/mainpage_cardview_textsize"
                 android:textAlignment="center"
                 />
             </LinearLayout>
@@ -98,7 +98,7 @@
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:layout_margin="@dimen/mainmenu_cardview_margin"
             android:padding="@dimen/mainmenu_cardview_paddin"
@@ -109,12 +109,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/reel1"
                 android:orientation="vertical"
+                android:layout_gravity="center"
                 android:weightSum="1"
                 >
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/face_clip"
+                    android:layout_height="@dimen/mainpage_cardview_icon_size"
+                    android:src="@drawable/radio_icon"
                     android:layout_gravity="center"
                     />
 
@@ -122,7 +123,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="abc"
+                    android:text="My Test"
+                    android:textSize="@dimen/mainpage_cardview_textsize"
                     android:textAlignment="center"
                     />
             </LinearLayout>
@@ -130,7 +132,7 @@
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:layout_margin="@dimen/mainmenu_cardview_margin"
             android:padding="@dimen/mainmenu_cardview_paddin"
@@ -140,12 +142,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/reel1"
                 android:orientation="vertical"
+                android:layout_gravity="center"
                 android:weightSum="1"
                 >
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/face_clip"
+                    android:layout_height="@dimen/mainpage_cardview_icon_size"
+                    android:src="@drawable/report_icon"
                     android:layout_gravity="center"
                     />
 
@@ -153,7 +156,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="abc"
+                    android:text="Reports"
+                    android:textSize="@dimen/mainpage_cardview_textsize"
                     android:textAlignment="center"
                     />
             </LinearLayout>
@@ -161,7 +165,7 @@
         </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:layout_margin="@dimen/mainmenu_cardview_margin"
             android:padding="@dimen/mainmenu_cardview_paddin"
@@ -170,13 +174,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/reel1"
+                android:layout_gravity="center"
                 android:orientation="vertical"
                 android:weightSum="1"
                 >
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/face_clip"
+                    android:layout_height="@dimen/mainpage_cardview_icon_size"
+                    android:src="@drawable/profile_icon"
                     android:layout_gravity="center"
                     />
 
@@ -184,7 +189,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="abc"
+                    android:text="Profile"
+                    android:textSize="@dimen/mainpage_cardview_textsize"
                     android:textAlignment="center"
                     />
             </LinearLayout>
@@ -201,7 +207,7 @@
             >
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.25"
                 android:layout_margin="@dimen/mainmenu_cardview_margin"
                 android:padding="@dimen/mainmenu_cardview_paddin"
@@ -210,13 +216,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/reel1"
+                    android:layout_gravity="center"
                     android:orientation="vertical"
                     android:weightSum="1"
                     >
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/face_clip"
+                        android:layout_height="@dimen/mainpage_cardview_icon_size"
+                        android:src="@drawable/news_icon"
                         android:layout_gravity="center"
                         />
 
@@ -224,7 +231,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="abc"
+                        android:text="News"
+                        android:textSize="@dimen/mainpage_cardview_textsize"
                         android:textAlignment="center"
                         />
                 </LinearLayout>
@@ -232,7 +240,7 @@
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.25"
                 android:layout_margin="@dimen/mainmenu_cardview_margin"
                 android:padding="@dimen/mainmenu_cardview_paddin"
@@ -241,13 +249,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/reel1"
+                    android:layout_gravity="center"
                     android:orientation="vertical"
                     android:weightSum="1"
                     >
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/face_clip"
+                        android:layout_height="@dimen/mainpage_cardview_icon_size"
+                        android:src="@drawable/notification_icon"
                         android:layout_gravity="center"
                         />
 
@@ -255,7 +264,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="abc"
+                        android:text="Notification"
+                        android:textSize="@dimen/mainpage_cardview_textsize"
                         android:textAlignment="center"
                         />
                 </LinearLayout>
@@ -263,7 +273,7 @@
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.25"
                 android:layout_margin="@dimen/mainmenu_cardview_margin"
                 android:padding="@dimen/mainmenu_cardview_paddin"
@@ -272,13 +282,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/reel1"
+                    android:layout_gravity="center"
                     android:orientation="vertical"
                     android:weightSum="1"
                     >
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/face_clip"
+                        android:layout_height="@dimen/mainpage_cardview_icon_size"
+                        android:src="@drawable/expert_icon"
                         android:layout_gravity="center"
                         />
 
@@ -286,14 +297,15 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="abc"
+                        android:text="Ask An Expert"
+                        android:textSize="@dimen/mainpage_cardview_textsize"
                         android:textAlignment="center"
                         />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.25"
                 android:layout_margin="@dimen/mainmenu_cardview_margin"
                 android:padding="@dimen/mainmenu_cardview_paddin"
@@ -302,13 +314,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/reel1"
+                    android:layout_gravity="center"
                     android:orientation="vertical"
                     android:weightSum="1"
                     >
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/face_clip"
+                        android:layout_height="@dimen/mainpage_cardview_icon_size"
+                        android:src="@drawable/bookmark_icon"
                         android:layout_gravity="center"
                         />
 
@@ -316,7 +329,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="abc"
+                        android:text="Bookmark"
+                        android:textSize="@dimen/mainpage_cardview_textsize"
                         android:textAlignment="center"
                         />
                 </LinearLayout>
@@ -355,7 +369,7 @@
         >
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/mainmenu_cardview_margin"
         android:padding="@dimen/mainmenu_cardview_paddin"
         >
@@ -363,6 +377,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:paddingBottom="@dimen/login_page_margin1"
             android:padding="@dimen/mainmenu_cardview_paddin"
             >
         <LinearLayout
@@ -383,8 +398,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="GATE-2019 + GATE-2018 Online Test Series"
-                android:textAlignment="center"
+                android:layout_marginLeft="@dimen/login_page_margin1"
+                android:layout_marginBottom="@dimen/login_page_margin1"
+                android:text="@string/home_page_cardview_offer"
+                android:textAlignment="textStart"
                 />
         </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -420,8 +437,16 @@
         android:weightSum="1"
         >
         <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/login_page_margin1"
+            android:layout_margin="@dimen/mainmenu_cardview_margin"
+            android:padding="@dimen/mainmenu_cardview_paddin"
+            >
+        <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="@dimen/mainmenu_cardview_margin"
             android:padding="@dimen/mainmenu_cardview_paddin"
             >
@@ -430,12 +455,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/reel1"
                 android:orientation="vertical"
+                android:layout_gravity="center"
                 android:weightSum="1"
                 >
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/face_clip"
+                    android:layout_height="80dp"
+                    android:src="@drawable/news_icon"
                     android:layout_gravity="center"
                     />
 
@@ -443,10 +469,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GATE-2019 + GATE-2018 Online Test Series"
+                    android:text="@string/home_page_cardview_upcoming_test"
                     android:textAlignment="center"
                     />
             </LinearLayout>
+        </android.support.v7.widget.CardView>
         </android.support.v7.widget.CardView>
     </LinearLayout>
 
