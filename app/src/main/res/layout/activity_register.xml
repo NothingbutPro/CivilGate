@@ -74,7 +74,7 @@
 
                 <EditText
                     android:background="#fff"
-                    android:id="@+id/editText"
+                    android:id="@+id/ful_nam"
                     android:layout_weight="0.1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
 
                 <EditText
                     android:background="#fff"
-                    android:id="@+id/editText21"
+                    android:id="@+id/email"
                     android:layout_weight="0.1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
 
                 <EditText
                     android:background="#fff"
-                    android:id="@+id/editTt"
+                    android:id="@+id/password"
                     android:layout_weight="0.1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
                 <!--android:layout_height="wrap_content"-->
                 <!--app:passwordToggleEnabled="true">-->
                 <EditText
-                    android:id="@+id/editText2"
+                    android:id="@+id/mobile"
                     android:layout_weight="0.1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -189,7 +189,80 @@
                 <!--</android.support.design.widget.TextInputLayout>-->
             </LinearLayout>
         </android.support.design.card.MaterialCardView>
+        <android.support.design.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+            <LinearLayout
+                android:padding="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:layout_gravity="center"
+                    android:src="@drawable/passoutyr"/>
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                <!--android:id="@+id/etPasswordLayout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:passwordToggleEnabled="true">-->
+                <EditText
+                    android:id="@+id/passout_year"
+                    android:layout_weight="0.1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Passout year"
+                    android:background="#fff"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="214dp" />
+                <!--</android.support.design.widget.TextInputLayout>-->
+            </LinearLayout>
+        </android.support.design.card.MaterialCardView>
+        <android.support.design.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+            <LinearLayout
+                android:padding="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.9"
+                    android:src="@drawable/address" />
+
+                <!--<android.support.design.widget.TextInputLayout-->
+                <!--android:id="@+id/etPasswordLayout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:passwordToggleEnabled="true">-->
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_weight="0.1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Address"
+                    android:background="#fff"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="214dp" />
+                <!--</android.support.design.widget.TextInputLayout>-->
+            </LinearLayout>
+        </android.support.design.card.MaterialCardView>
         <android.support.design.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -203,12 +276,14 @@
                 android:orientation="horizontal">
 
                 <ImageView
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
+                    android:layout_weight="0.85"
                     android:layout_gravity="center"
                     android:src="@drawable/book_icon"/>
                 <Spinner
+                    android:id="@+id/type"
                     android:layout_weight="0.2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -219,34 +294,6 @@
             </LinearLayout>
         </android.support.design.card.MaterialCardView>
 
-        <android.support.design.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="1"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"
-                    android:layout_gravity="center"
-                    android:src="@drawable/book_icon"/>
-                <Spinner
-                    android:layout_weight="0.2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/login_page_margin"
-                    android:entries="@array/stream_type_spinner"
-                    >
-                </Spinner>
-            </LinearLayout>
-        </android.support.design.card.MaterialCardView>
 
     </LinearLayout>
 

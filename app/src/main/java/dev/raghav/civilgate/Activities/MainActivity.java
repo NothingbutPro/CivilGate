@@ -1,4 +1,4 @@
-package dev.raghav.civilgate;
+package dev.raghav.civilgate.Activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import dev.raghav.civilgate.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().getItem(9).setActionView(R.layout.menu_image);
         navigationView.getMenu().getItem(10).setActionView(R.layout.menu_image);
         navigationView.getMenu().getItem(11).setActionView(R.layout.menu_image);
+        navigationView.setItemIconTintList(null);
     }
 
     @Override

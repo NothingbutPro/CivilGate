@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+import dev.raghav.civilgate.Activities.LoginActivity;
+
 public class SplashActivity extends AppCompatActivity {
    // SessionManager manager;
 
