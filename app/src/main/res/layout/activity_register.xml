@@ -40,7 +40,9 @@
     </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:padding="7dp"
         android:layout_width="match_parent"
@@ -263,6 +265,7 @@
                 <!--</android.support.design.widget.TextInputLayout>-->
             </LinearLayout>
         </android.support.design.card.MaterialCardView>
+
         <android.support.design.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -270,33 +273,56 @@
             >
 
             <LinearLayout
+                android:padding="0dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="1"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <ImageView
-
+                   android:id="@+id/gate_photo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.85"
+                    android:layout_height="70dp"
+                    android:layout_weight="0.5"
                     android:layout_gravity="center"
-                    android:src="@drawable/book_icon"/>
-                <Spinner
-                    android:id="@+id/type"
-                    android:layout_weight="0.2"
+                    android:src="@drawable/no_photo"/>
+                <TextView
+                    android:text="Please select an image which you have uploaded in GATE"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/login_page_margin"
-                    android:entries="@array/login_type_spinner"
-                    >
-                </Spinner>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </android.support.design.card.MaterialCardView>
 
+        <android.support.design.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+
+            <LinearLayout
+                android:padding="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/gate_sign"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_weight="0.5"
+                    android:layout_gravity="center"
+                    android:src="@drawable/nosign"/>
+                <TextView
+                    android:text="Please select an image which you have uploaded in GATE"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </android.support.design.card.MaterialCardView>
 
     </LinearLayout>
-
+</ScrollView>
+   <!--end of-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
