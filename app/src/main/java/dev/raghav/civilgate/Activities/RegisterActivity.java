@@ -1,13 +1,15 @@
 package dev.raghav.civilgate.Activities;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -16,9 +18,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.FileDescriptor;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import dev.raghav.civilgate.Parsingfiles.LoginReg.RegisPars_responce;
 import dev.raghav.civilgate.R;
@@ -38,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
     // private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = ;
     EditText email , password , passing_year , ful_name , mobile,address ;
      ImageView  gate_photo , gate_sign;
+     Button reg_btn;
      View gv;
      Api  apiInterface;
      int a = 0;
@@ -61,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if(checkforpermission())
                 {
                     Toast.makeText(RegisterActivity.this, "all set", Toast.LENGTH_SHORT).show();
+                    a=1;
                     opengoddamngallery();
 
                 }else {
@@ -74,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if(checkforpermission())
                 {
                     Toast.makeText(RegisterActivity.this, "all set", Toast.LENGTH_SHORT).show();
+                    a=2;
                     opengoddamngallery();
 
                 }else {
@@ -152,6 +162,8 @@ public class RegisterActivity extends AppCompatActivity {
         mobile = findViewById(R.id.mobile);
         gate_sign = findViewById(R.id.gate_sign);
         gate_photo = findViewById(R.id.gate_photo);
+        reg_btn = findViewById(R.id.reg_btn);
+
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -211,12 +223,37 @@ public class RegisterActivity extends AppCompatActivity {
             if (resultData != null) {
                 uri = resultData.getData();
                 Log.i("We go somethihbygf", "Uri: " + uri.toString());
+                Toast.makeText(this, "is "+uri, Toast.LENGTH_SHORT).show();
                 showImage(uri);
             }
         }
     }
 
-    private void showImage(Uri uri) {
+    private Bitmap showImage(Uri uri) {
+        ParcelFileDescriptor parcelFileDescriptor =
+                null;
+        try {
+            parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        if(a==1)
+        {
+            gate_photo.setImageBitmap(image);
+        }else{
+            gate_sign.setImageBitmap(image);
+            reg_btn.requestFocus();
+
+        }
+
+        try {
+            parcelFileDescriptor.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
     private void showMessageOKCancel(String s, DialogInterface.OnClickListener onClickListener) {
