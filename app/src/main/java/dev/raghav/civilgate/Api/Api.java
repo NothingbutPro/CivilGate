@@ -2,13 +2,20 @@ package dev.raghav.civilgate.Api;
 
 
 
+import android.database.Observable;
+
 import java.io.File;
 
 import dev.raghav.civilgate.Parsingfiles.LoginReg.RegisPars_responce;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface Api {
 
@@ -26,7 +33,17 @@ public interface Api {
             @Field("profile_image") File profile_image,
             @Field("sign_image") File sign_image
     );
-
+    @Multipart
+    @POST("user/updateprofile")
+    Observable<ResponseBody> Register_to_app_with_profile(@Part("name") RequestBody fullName,
+                                           @Part("mobile") RequestBody mobile,
+                                           @Part("email") RequestBody email,
+                                            @Part("password") RequestBody password,
+                                            @Part("passout_year") RequestBody passout_year,
+                                            @Part("collage_name") RequestBody collage_name,
+                                            @Part("address") RequestBody address,
+                                           @Part MultipartBody.Part gate_photo,
+                                           @Part MultipartBody.Part gate_sign_photo);
 //    @FormUrlEncoded
 //    @POST("userlogin")
 //    Call<LoginResponse> userLogin(

@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -23,18 +26,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
+import dev.raghav.civilgate.Const_Files.Retro_Urls;
 import dev.raghav.civilgate.Parsingfiles.LoginReg.RegisPars_responce;
 import dev.raghav.civilgate.R;
 import dev.raghav.civilgate.Api.Api;
 
 import dev.raghav.civilgate.Api.RetrofitClientApi;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -42,9 +54,11 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class RegisterActivity extends AppCompatActivity {
     private static final int PERMISSION_GATE_READ = 141;
     private static final int READ_REQUEST_CODE = 101;
+    CollapsingToolbarLayout toolbar_post;
     // private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = ;
-    EditText email , password , passing_year , ful_name , mobile,address ;
+    EditText email , password , passing_year , ful_name , mobile,address,collage_name;
      ImageView  gate_photo , gate_sign;
+     File gate_photo_file , gate_sign_file;
      Button reg_btn;
      View gv;
      Api  apiInterface;
@@ -63,34 +77,125 @@ public class RegisterActivity extends AppCompatActivity {
         apiInterface = RetrofitClientApi.getClient().create(Api.class);
         checkforpermission();
 
-        gate_photo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkforpermission())
-                {
-                    Toast.makeText(RegisterActivity.this, "all set", Toast.LENGTH_SHORT).show();
-                    a=1;
-                    opengoddamngallery();
+        gate_photo.setOnClickListener(v -> {
+            if(checkforpermission())
+            {
+                Toast.makeText(RegisterActivity.this, "all set", Toast.LENGTH_SHORT).show();
+                a=1;
+                opengoddamngallery();
 
-                }else {
-                 requestitback();
-                }
+            }else {
+             requestitback();
             }
         });
-        gate_sign.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkforpermission())
-                {
-                    Toast.makeText(RegisterActivity.this, "all set", Toast.LENGTH_SHORT).show();
-                    a=2;
-                    opengoddamngallery();
+        gate_sign.setOnClickListener(v -> {
+            if(checkforpermission())
+            {
+                Toast.makeText(RegisterActivity.this, "all set", Toast.LENGTH_SHORT).show();
+                a=2;
+                opengoddamngallery();
 
-                }else {
-                    requestitback();
-                }
+            }else {
+                requestitback();
             }
         });
+        //calling for registration
+        reg_btn.setOnClickListener(v -> {
+            if(seeifallvaliD())
+            {
+                if(gate_photo_file !=null && gate_sign_file !=null)
+                {
+                    registerthestupiduser(gate_photo_file , gate_sign_file);
+                    Toast.makeText(RegisterActivity.this, "ok now you can upload", Toast.LENGTH_SHORT).show();
+                }else{
+
+                    Toast.makeText(RegisterActivity.this, "something is wrong", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+        //
+
+    }
+
+    private void registerthestupiduser(File gate_photo_file, File gate_sign_file) {
+        RequestBody gate_fulname  = RequestBody.create(MediaType.get("text/plain") , ful_name.getText().toString());
+        RequestBody gate_email  = RequestBody.create(MediaType.get("text/plain") , email.getText().toString());
+        RequestBody gate_password  = RequestBody.create(MediaType.get("text/plain") , password.getText().toString());
+        RequestBody gate_mobile  = RequestBody.create(MediaType.get("text/plain") , mobile.getText().toString());
+        RequestBody gate_passout  = RequestBody.create(MediaType.get("text/plain") , passing_year.getText().toString());
+        RequestBody gate_collage  = RequestBody.create(MediaType.get("text/plain") , collage_name.getText().toString());
+        RequestBody gate_address  = RequestBody.create(MediaType.get("text/plain") , address.getText().toString());
+
+        RequestBody gateRequestBodyphoto = RequestBody.create(MediaType.parse("image/*"), gate_photo_file );
+        RequestBody gateRequestBodysign = RequestBody.create(MediaType.parse("image/*"), gate_sign_file);
+        MultipartBody.Part gateToUploadphoto = MultipartBody.Part.createFormData("file", gate_photo_file.getName(), gateRequestBodyphoto);
+        MultipartBody.Part gateToUploadsign = MultipartBody.Part.createFormData("file", gate_sign_file.getName(), gateRequestBodysign);
+        Retrofit REgretrofit = new Retrofit.Builder()
+                .baseUrl(Retro_Urls.The_Base)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Api RegApi = REgretrofit.create(Api.class);
+        Call<RegisPars_responce> regisPars_responceCall = (Call<RegisPars_responce>) RegApi.Register_to_app_with_profile( gate_fulname, gate_mobile ,gate_email ,gate_password , gate_passout , gate_collage , gate_address , gateToUploadphoto , gateToUploadsign);
+        regisPars_responceCall.enqueue(new Callback<RegisPars_responce>() {
+            @Override
+            public void onResponse(Call<RegisPars_responce> call, Response<RegisPars_responce> response) {
+                Toast.makeText(RegisterActivity.this, ""+response.body().getResponce(), Toast.LENGTH_SHORT).show();
+                Log.e("responce is" , ""+response.body().getResponce());
+            }
+
+            @Override
+            public void onFailure(Call<RegisPars_responce> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+    private void init() {
+//        this.a = a+10;
+//        Log.d("init" , "works a"+a);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        passing_year = findViewById(R.id.passout_year);
+        ful_name = findViewById(R.id.ful_nam);
+        mobile = findViewById(R.id.mobile);
+        gate_sign = findViewById(R.id.gate_sign);
+        gate_photo = findViewById(R.id.gate_photo);
+        reg_btn = findViewById(R.id.reg_btn);
+        toolbar_post = findViewById(R.id.toolbar_post);
+        address = findViewById(R.id.address);
+        collage_name = findViewById(R.id.collage_name);
+
+    }
+
+    private Boolean seeifallvaliD() {
+        Boolean valBoolean = true;
+        if(email.getText().toString().length() ==0)
+        {
+            email.setError("Can not be empty");
+            valBoolean = false;
+        }
+        if( password.getText().toString().length() <=6 )
+        {
+            password.setError("Password is weak");
+           valBoolean = false;
+        } if(ful_name.getText().toString().length() <=2)
+        {
+            ful_name.setError("Name is too short");
+            ful_name.requestFocus();
+//            toolbar_post.requestFocus();
+            valBoolean = false;
+        }
+        if(mobile.getText().toString().length() <=9)
+        {
+            mobile.setError("Number is inValid");
+            valBoolean = false;
+        }
+//        valBoolean = false;
+
+        return valBoolean;
 
     }
 
@@ -152,19 +257,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void init() {
-//        this.a = a+10;
-//        Log.d("init" , "works a"+a);
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        passing_year = findViewById(R.id.passout_year);
-        ful_name = findViewById(R.id.ful_nam);
-        mobile = findViewById(R.id.mobile);
-        gate_sign = findViewById(R.id.gate_sign);
-        gate_photo = findViewById(R.id.gate_photo);
-        reg_btn = findViewById(R.id.reg_btn);
 
-    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -224,12 +318,12 @@ public class RegisterActivity extends AppCompatActivity {
                 uri = resultData.getData();
                 Log.i("We go somethihbygf", "Uri: " + uri.toString());
                 Toast.makeText(this, "is "+uri, Toast.LENGTH_SHORT).show();
-                showImage(uri);
+                showImage(uri,resultData);
             }
         }
     }
 
-    private Bitmap showImage(Uri uri) {
+    private File showImage(Uri uri, Intent resultData) {
         ParcelFileDescriptor parcelFileDescriptor =
                 null;
         try {
@@ -239,22 +333,55 @@ public class RegisterActivity extends AppCompatActivity {
         }
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-        if(a==1)
-        {
+//        OutputStream = new
+        if (a == 1) {
+            File filesDir = getApplicationContext().getFilesDir();
+           gate_photo_file = new File(filesDir, "photo" + ".jpg");
+
+            OutputStream os;
+            try {
+                os = new FileOutputStream(gate_photo_file);
+                Log.e("file is", ""+gate_photo_file.getName());
+                image.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                os.flush();
+                os.close();
+            } catch (Exception e) {
+                Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+            }
+
+//            }
             gate_photo.setImageBitmap(image);
-        }else{
+
+                return null;
+            } else
+                {
+
+            File filesDir = getApplicationContext().getFilesDir();
+            gate_sign_file = new File(filesDir, "sign" + ".jpg");
+
+            OutputStream os;
+            try {
+                os = new FileOutputStream(gate_sign_file);
+                Log.e("file is", ""+gate_sign_file.getName());
+                image.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                os.flush();
+                os.close();
+            } catch (Exception e) {
+                Log.e(getClass().getSimpleName(), "Error writing bitmap", e);
+            }
             gate_sign.setImageBitmap(image);
-            reg_btn.requestFocus();
 
-        }
+            }
 
-        try {
-            parcelFileDescriptor.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                parcelFileDescriptor.close();
+            } catch (IOException e) {
+                Toast.makeText(this, "cant" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "" + gate_sign_file.getName(), Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+            return null;
         }
-        return image;
-    }
 
     private void showMessageOKCancel(String s, DialogInterface.OnClickListener onClickListener) {
         new AlertDialog.Builder(RegisterActivity.this)
