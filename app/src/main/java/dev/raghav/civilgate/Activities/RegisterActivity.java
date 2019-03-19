@@ -25,7 +25,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -105,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
             {
                 if(gate_photo_file !=null && gate_sign_file !=null)
                 {
-                    registerthestupiduser(gate_photo_file , gate_sign_file);
+                    registerthestupiduser(gate_photo_file , gate_sign_file , gate_photo_file.getAbsolutePath() , gate_sign_file.getAbsolutePath());
                     Toast.makeText(RegisterActivity.this, "ok now you can upload", Toast.LENGTH_SHORT).show();
                 }else{
 
@@ -118,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void registerthestupiduser(File gate_photo_file, File gate_sign_file) {
+    private void registerthestupiduser(File gate_photo_file, File gate_sign_file, String pabsolutePath, String spath) {
         RequestBody gate_fulname  = RequestBody.create(MediaType.get("text/plain") , ful_name.getText().toString());
         RequestBody gate_email  = RequestBody.create(MediaType.get("text/plain") , email.getText().toString());
         RequestBody gate_password  = RequestBody.create(MediaType.get("text/plain") , password.getText().toString());
@@ -129,14 +128,24 @@ public class RegisterActivity extends AppCompatActivity {
 
         RequestBody gateRequestBodyphoto = RequestBody.create(MediaType.parse("image/*"), gate_photo_file );
         RequestBody gateRequestBodysign = RequestBody.create(MediaType.parse("image/*"), gate_sign_file);
+//        RequestBody gateRequestBodyphoto = RequestBody.create(MediaType.parse("image/*"), gate_photo_file );
+//        RequestBody gateRequestBodysign = RequestBody.create(MediaType.parse("image/*"), gate_sign_file);
         MultipartBody.Part gateToUploadphoto = MultipartBody.Part.createFormData("file", gate_photo_file.getName(), gateRequestBodyphoto);
-        MultipartBody.Part gateToUploadsign = MultipartBody.Part.createFormData("file", gate_sign_file.getName(), gateRequestBodysign);
+        MultipartBody.Part gateToUploadsign = MultipartBody.Part.createFormData("file1", gate_sign_file.getName(), gateRequestBodysign);
+        // create RequestBody instance from file
+//        RequestBody gate_photo_file2 =
+//                RequestBody.create(
+//                        MediaType.parse(getContentResolver().getType(gate_photo_file)),
+//                        file
+//                );
+        // create RequestBody instance from file
+//        RequestBody gate_sign_file2 =
+//                RequestBody.create(Med);
         Retrofit REgretrofit = new Retrofit.Builder()
-                .baseUrl(Retro_Urls.The_Base)
-                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
                 .build();
         Api RegApi = REgretrofit.create(Api.class);
-        Call<RegisPars_responce> regisPars_responceCall = (Call<RegisPars_responce>) RegApi.Register_to_app_with_profile( gate_fulname, gate_mobile ,gate_email ,gate_password , gate_passout , gate_collage , gate_address , gateToUploadphoto , gateToUploadsign);
+        Call<RegisPars_responce> regisPars_responceCall = RegApi.Register_to_app_with_profile( gate_fulname, gate_mobile ,gate_email ,gate_password , gate_passout , gate_collage , gate_address , gateToUploadphoto , gateToUploadsign);
         regisPars_responceCall.enqueue(new Callback<RegisPars_responce>() {
             @Override
             public void onResponse(Call<RegisPars_responce> call, Response<RegisPars_responce> response) {
