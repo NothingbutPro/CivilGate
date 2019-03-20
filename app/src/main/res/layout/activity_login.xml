@@ -80,35 +80,7 @@
         android:layout_marginLeft="@dimen/login_page_margin1"
         android:layout_marginBottom="10dp"
         >
-        <android.support.design.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="1"
-                android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.85"
-                android:layout_gravity="center"
-                android:src="@drawable/book_icon"/>
-
-
-            <Spinner
-                android:layout_weight="0.2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/login_page_margin"
-            android:entries="@array/login_type_spinner"
-            >
-        </Spinner>
-            </LinearLayout>
-        </android.support.design.card.MaterialCardView>
 
         <android.support.design.card.MaterialCardView
             android:layout_width="match_parent"
@@ -131,7 +103,7 @@
 
     <EditText
         android:background="#fff"
-        android:id="@+id/editText"
+        android:id="@+id/emailfx"
         android:layout_weight="0.1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -168,7 +140,7 @@
                 <!--android:layout_height="wrap_content"-->
                 <!--app:passwordToggleEnabled="true">-->
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/passwordtxt"
         android:layout_weight="0.1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

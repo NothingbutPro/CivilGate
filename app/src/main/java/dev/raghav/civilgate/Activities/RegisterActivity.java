@@ -1,17 +1,18 @@
 package dev.raghav.civilgate.Activities;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
@@ -32,20 +39,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import dev.raghav.civilgate.Const_Files.Retro_Urls;
 import dev.raghav.civilgate.Parsingfiles.LoginReg.RegisPars_responce;
 import dev.raghav.civilgate.R;
 import dev.raghav.civilgate.Api.Api;
 
 import dev.raghav.civilgate.Api.RetrofitClientApi;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
+import dev.raghav.civilgate.Utils.Utilities;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -63,6 +65,7 @@ public class RegisterActivity extends AppCompatActivity {
      Api  apiInterface;
      int a = 0;
     private static final int MY_PERMISSIONS_REQUESTS = 101;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,47 +121,57 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registerthestupiduser(File gate_photo_file, File gate_sign_file, String pabsolutePath, String spath) {
-        RequestBody gate_fulname  = RequestBody.create(MediaType.get("text/plain") , ful_name.getText().toString());
-        RequestBody gate_email  = RequestBody.create(MediaType.get("text/plain") , email.getText().toString());
-        RequestBody gate_password  = RequestBody.create(MediaType.get("text/plain") , password.getText().toString());
-        RequestBody gate_mobile  = RequestBody.create(MediaType.get("text/plain") , mobile.getText().toString());
-        RequestBody gate_passout  = RequestBody.create(MediaType.get("text/plain") , passing_year.getText().toString());
-        RequestBody gate_collage  = RequestBody.create(MediaType.get("text/plain") , collage_name.getText().toString());
-        RequestBody gate_address  = RequestBody.create(MediaType.get("text/plain") , address.getText().toString());
-
-        RequestBody gateRequestBodyphoto = RequestBody.create(MediaType.parse("image/*"), gate_photo_file );
-        RequestBody gateRequestBodysign = RequestBody.create(MediaType.parse("image/*"), gate_sign_file);
+//        RequestBody gate_fulname  = RequestBody.create(MediaType.get("text/plain") , ful_name.getText().toString());
+//        RequestBody gate_email  = RequestBody.create(MediaType.get("text/plain") , email.getText().toString());
+//        RequestBody gate_password  = RequestBody.create(MediaType.get("text/plain") , password.getText().toString());
+//        RequestBody gate_mobile  = RequestBody.create(MediaType.get("text/plain") , mobile.getText().toString());
+//        RequestBody gate_passout  = RequestBody.create(MediaType.get("text/plain") , passing_year.getText().toString());
+//        RequestBody gate_collage  = RequestBody.create(MediaType.get("text/plain") , collage_name.getText().toString());
+//        RequestBody gate_address  = RequestBody.create(MediaType.get("text/plain") , address.getText().toString());
+//
 //        RequestBody gateRequestBodyphoto = RequestBody.create(MediaType.parse("image/*"), gate_photo_file );
 //        RequestBody gateRequestBodysign = RequestBody.create(MediaType.parse("image/*"), gate_sign_file);
-        MultipartBody.Part gateToUploadphoto = MultipartBody.Part.createFormData("file", gate_photo_file.getName(), gateRequestBodyphoto);
-        MultipartBody.Part gateToUploadsign = MultipartBody.Part.createFormData("file1", gate_sign_file.getName(), gateRequestBodysign);
-        // create RequestBody instance from file
-//        RequestBody gate_photo_file2 =
-//                RequestBody.create(
-//                        MediaType.parse(getContentResolver().getType(gate_photo_file)),
-//                        file
-//                );
-        // create RequestBody instance from file
-//        RequestBody gate_sign_file2 =
-//                RequestBody.create(Med);
-        Retrofit REgretrofit = new Retrofit.Builder()
-                .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
-                .build();
-        Api RegApi = REgretrofit.create(Api.class);
-        Call<RegisPars_responce> regisPars_responceCall = RegApi.Register_to_app_with_profile( gate_fulname, gate_mobile ,gate_email ,gate_password , gate_passout , gate_collage , gate_address , gateToUploadphoto , gateToUploadsign);
-        regisPars_responceCall.enqueue(new Callback<RegisPars_responce>() {
-            @Override
-            public void onResponse(Call<RegisPars_responce> call, Response<RegisPars_responce> response) {
-                Toast.makeText(RegisterActivity.this, ""+response.body().getResponce(), Toast.LENGTH_SHORT).show();
-                Log.e("responce is" , ""+response.body().getResponce());
-            }
-
-            @Override
-            public void onFailure(Call<RegisPars_responce> call, Throwable t) {
-
-            }
-        });
-
+////        RequestBody gateRequestBodyphoto = RequestBody.create(MediaType.parse("image/*"), gate_photo_file );
+////        RequestBody gateRequestBodysign = RequestBody.create(MediaType.parse("image/*"), gate_sign_file);
+//        MultipartBody.Part gateToUploadphoto = MultipartBody.Part.createFormData("file", gate_photo_file.getName(), gateRequestBodyphoto);
+//        MultipartBody.Part gateToUploadsign = MultipartBody.Part.createFormData("file1", gate_sign_file.getName(), gateRequestBodysign);
+//        // create RequestBody instance from file
+////        RequestBody gate_photo_file2 =
+////                RequestBody.create(
+////                        MediaType.parse(getContentResolver().getType(gate_photo_file)),
+////                        file
+////                );
+//        // create RequestBody instance from file
+////        RequestBody gate_sign_file2 =
+////                RequestBody.create(Med);
+//        Retrofit REgretrofit = new Retrofit.Builder()
+//                .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//        Api RegApi = REgretrofit.create(Api.class);
+//        if(gate_photo_file !=null && gate_sign_file !=null)
+//        {
+//            if(gate_photo_file.exists() && gate_sign_file.exists())
+//            {
+//                Toast.makeText(this, "Something is there", Toast.LENGTH_SHORT).show();
+//                Call<RegisPars_responce> regisPars_responceCall = RegApi.Register_to_app_with_profile( ful_name.getText().toString(), mobile.getText().toString() ,email.getText().toString() ,password.getText().toString() , passing_year.getText().toString() , collage_name.getText().toString() , address.getText().toString() , gate_photo_file , gate_sign_file);
+//                regisPars_responceCall.enqueue(new Callback<RegisPars_responce>() {
+//                    @Override
+//                    public void onResponse(Call<RegisPars_responce> call, Response<RegisPars_responce> response) {
+//                        Toast.makeText(RegisterActivity.this, ""+response.body().getResponce(), Toast.LENGTH_SHORT).show();
+//                        Log.e("responce is" , ""+response.body().getResponce());
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<RegisPars_responce> call, Throwable t) {
+//
+//                    }
+//                });
+//            }else{
+//                Toast.makeText(this, "None found", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
+        new Final_Image_upload(gate_photo_file , gate_sign_file).execute();
 
     }
 
@@ -400,6 +413,73 @@ public class RegisterActivity extends AppCompatActivity {
                 .create()
                 .show();
     }
+
+    private class Final_Image_upload extends AsyncTask<Void , Void , String> {
+        File gate_photo , gate_sign;
+        String result = "";
+
+        @Override
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(RegisterActivity.this);
+            dialog.setCancelable(false);
+            dialog.show();
+            super.onPreExecute();
+        }
+
+        public Final_Image_upload(File gate_photo_file, File gate_sign_file) {
+            this.gate_photo = gate_photo_file;
+            this.gate_sign = gate_sign_file;
+        }
+
+        @Override
+        protected String doInBackground(Void... Void) {
+            try {
+
+
+                MultipartEntity entity = new MultipartEntity(
+                        HttpMultipartMode.BROWSER_COMPATIBLE);
+
+                entity.addPart("name", new StringBody(ful_name.getText().toString()));
+                entity.addPart("email", new StringBody("" + email.getText().toString()));
+                entity.addPart("mobile", new StringBody("" + mobile.getText().toString()));
+                entity.addPart("password", new StringBody("" + password.getText().toString()));
+                entity.addPart("passout_year", new StringBody("" + passing_year.getText().toString()));
+                entity.addPart("collage_name", new StringBody("" + collage_name.getText().toString()));
+                entity.addPart("address", new StringBody("" + address.getText().toString()));
+                entity.addPart("profile_image", new FileBody(gate_photo));
+                entity.addPart("sign_image", new FileBody(gate_sign));
+//                    result = Utilities.postEntityAndFindJson("https://www.spellclasses.co.in/DM/Api/taxreturn", entity);
+//                 //   result = Utilities.postEntityAndFindJson("https://www.spellclasses.co.in/DM/Api/taxreturn", entity);
+                result = Utilities.postEntityAndFindJson("http://ihisaab.in/lms/api/Ragistration", entity);
+            } catch (Exception e) {
+                       e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+
+            String result1 = result;
+            if (result1 != null) {
+
+                dialog.dismiss();
+                Log.e("result1", result1);
+
+                Toast.makeText(RegisterActivity.this, " Successfully Registered", Toast.LENGTH_LONG).show();
+
+                //   Intent in=new Intent(MainActivity.this,NextActivity.class);
+                //  in.putExtra("doc",doc);
+                //     startActivity(in);
+
+            } else {
+                dialog.dismiss();
+                Toast.makeText(RegisterActivity.this, "Some Problem", Toast.LENGTH_LONG).show();
+            }
+
+        }
+        }
+
+
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode,
 //                                           String[] permissions, int[] grantResults) {

@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import dev.raghav.civilgate.R;
 public class LoginActivity  extends AppCompatActivity {
     TextView NewRegister;
     Button Btn_Signin;
+    EditText emailfx , passwordtxt;
     AlertDialog.Builder  builder;
     final String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     private int MY_PERMISSIONS_REQUESTS = 141;
@@ -29,7 +31,8 @@ public class LoginActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_login);
          builder = new AlertDialog.Builder(this);
        // getSupportActionBar().hide();
-
+        emailfx = findViewById(R.id.emailfx);
+        passwordtxt = findViewById(R.id.passwordtxt);
         NewRegister=findViewById(R.id.new_reg);
         Btn_Signin=findViewById(R.id.button_signin);
 
@@ -46,8 +49,20 @@ public class LoginActivity  extends AppCompatActivity {
        Btn_Signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
+                if(emailfx.getText().toString().length() !=0 && passwordtxt.getText().toString().length() !=0)
+                {
+                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                    startActivity(intent);
+                }else {
+                    if(emailfx.getText().toString().length() ==0)
+                    {
+                        emailfx.setError("Email can not be empty");
+                    }else if(emailfx.getText().toString().contains("@") ||emailfx.getText().toString().contains(".") || emailfx.getText().toString().contains("com")){
+
+                    }
+                    Toast.makeText(LoginActivity.this, "wth fill all first", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
