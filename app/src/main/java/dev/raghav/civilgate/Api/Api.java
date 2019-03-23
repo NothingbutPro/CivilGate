@@ -20,6 +20,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface Api {
@@ -38,14 +39,17 @@ public interface Api {
             @Field("profile_image") File profile_image,
             @Field("sign_image") File sign_image
     );
-
+  @FormUrlEncoded
     @POST("login")
-    @FormUrlEncoded
     Call<Login_Responce> Login_that_dk(
             @Field("email") String email,
-            @Field("password") String password
+              @Field("password") String password
     );
-    @Headers({"Content-Type: application/x-www-form-urlencoded"})
+   // @Headers("application/x-www-form-urlencoded")
+
+//@POST("/login")
+//    Call<Login_Responce> Login_that_dk(@Body Login_Responce.Login_user login_user);
+
     @FormUrlEncoded
     @POST("api/"+Retro_Urls.Registration)
     Call<RegisPars_responce> Register_to_app_with_profile(@Field("name") String fullName,

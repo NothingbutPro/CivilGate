@@ -4,9 +4,10 @@ import java.io.File;
 
 public class Login_Responce  {
     Login_user loginUserinfo;
-    String ResponceString;
 
-    public Login_Responce(Login_user loginUserinfo, String responceString) {
+    Boolean ResponceString;
+
+    public Login_Responce(Login_user loginUserinfo, Boolean responceString) {
 
         this.loginUserinfo = loginUserinfo;
         this.ResponceString = responceString;
@@ -21,11 +22,11 @@ public class Login_Responce  {
         this.loginUserinfo = loginUserinfo;
     }
 
-    public String getResponceString() {
+    public Boolean getResponceString() {
         return ResponceString;
     }
 
-    public void setResponceString(String responceString) {
+    public void setResponceString(Boolean responceString) {
         ResponceString = responceString;
     }
 

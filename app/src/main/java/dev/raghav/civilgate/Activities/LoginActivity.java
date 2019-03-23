@@ -9,13 +9,23 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import dev.raghav.civilgate.Api.Api;
+import dev.raghav.civilgate.Const_Files.Retro_Urls;
+import dev.raghav.civilgate.Parsingfiles.LoginReg.Login_Credential;
+import dev.raghav.civilgate.Parsingfiles.LoginReg.Login_Responce;
 import dev.raghav.civilgate.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity  extends AppCompatActivity {
     TextView NewRegister;
@@ -49,22 +59,63 @@ public class LoginActivity  extends AppCompatActivity {
        Btn_Signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(emailfx.getText().toString().length() !=0 && passwordtxt.getText().toString().length() !=0)
+                if(checkvalidem())
                 {
-                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                    startActivity(intent);
-                }else {
-                    if(emailfx.getText().toString().length() ==0)
-                    {
-                        emailfx.setError("Email can not be empty");
-                    }else if(emailfx.getText().toString().contains("@") ||emailfx.getText().toString().contains(".") || emailfx.getText().toString().contains("com")){
+//                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+//                    startActivity(intent);
+                    Retrofit RetroLogin = new Retrofit.Builder()
+                .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
+                .build();
+                    Api RegApi = RetroLogin.create(Api.class);
+                    Call<Login_Responce> login_responceCall = RegApi.Login_that_dk(emailfx.getText().toString() , passwordtxt.getText().toString());
+                    login_responceCall.enqueue(new Callback<Login_Responce>() {
+                        @Override
+                        public void onResponse(Call<Login_Responce> call, Response<Login_Responce> response) {
+                            Log.d("string" , ""+response.body().getResponceString());
+//                            if(!response.body().getResponceString().equals(false))
+//                            {
+                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                startActivity(intent);
+//                            }else{
+//                                Toast.makeText(LoginActivity.this, "Either Email is wrong or Password", Toast.LENGTH_SHORT).show();
+//                            }
 
-                    }
-                    Toast.makeText(LoginActivity.this, "wth fill all first", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Login_Responce> call, Throwable t) {
+                            Toast.makeText(LoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }else{
+                    Toast.makeText(LoginActivity.this, "Check Credential", Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
+    }
+
+    private boolean checkvalidem() {
+        Boolean wth = false;
+        if(emailfx.getText().toString().length() ==0 && passwordtxt.getText().toString().length() ==0)
+        {
+
+            return wth;
+        }if(!emailfx.getText().toString().contains("@") && !emailfx.getText().toString().contains(".") && !emailfx.getText().toString().contains("com")&& passwordtxt.getText().toString().length() ==0)
+        {
+             emailfx.setError("Email is invalid");
+             passwordtxt.setError("Password is too short");
+            return wth;
+        }
+        if(passwordtxt.getText().toString().length() ==0)
+        {
+            passwordtxt.setError("Password is too short");
+        }
+        wth = true;
+        return wth;
     }
 
     private void checkforpermission() {
