@@ -76,7 +76,7 @@ public class LoginActivity  extends AppCompatActivity {
 
         Btn_Signin.setOnClickListener(v -> {
             if (checkvalidem()) {
-                new Do_Login(emailfx.getText().toString(), passwordtxt.getText().toString()).execute();
+               // new Do_Login(emailfx.getText().toString(), passwordtxt.getText().toString()).execute();
 //               Api loginService =
 //                       ServiceGenerator.createService(Api.class, "email", "password");
 //               Call<Login_Responce> call = loginService.basicLogin();
@@ -99,31 +99,31 @@ public class LoginActivity  extends AppCompatActivity {
 //                                    Log.d("Error", t.getMessage());
 //                                }
 //                                });
-//                    Retrofit RetroLogin = new Retrofit.Builder()
-//                .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//                    Api RegApi = RetroLogin.create(Api.class);
-//                    Call<Login_Responce> login_responceCall = RegApi.Login_that_dk(emailfx.getText().toString() , passwordtxt.getText().toString());
-//                    login_responceCall.enqueue(new Callback<Login_Responce>() {
-//                        @Override
-//                        public void onResponse(Call<Login_Responce> call, Response<Login_Responce> response) {
-//                          //  Log.d("string" , ""+response.body().getResponceString());
-////                            if(!response.body().getResponceString().equals(false))
-////                            {
-//                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-////                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-////                                startActivity(intent);
-////                            }else{
-////                                Toast.makeText(LoginActivity.this, "Either Email is wrong or Password", Toast.LENGTH_SHORT).show();
-////                            }
-//
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<Login_Responce> call, Throwable t) {
-//                            Toast.makeText(LoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
+                    Retrofit RetroLogin = new Retrofit.Builder()
+                .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
+                .build();
+                    Api RegApi = RetroLogin.create(Api.class);
+                    Call<Login_Responce> login_responceCall = RegApi.Login_that_dk(emailfx.getText().toString() , passwordtxt.getText().toString());
+                    login_responceCall.enqueue(new Callback<Login_Responce>() {
+                        @Override
+                        public void onResponse(Call<Login_Responce> call, Response<Login_Responce> response) {
+                            Log.d("string" , ""+response.body().getResponce());
+//                            if(!response.body().getResponceString().equals(false))
+//                            {
+                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+//                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+//                                startActivity(intent);
+//                            }else{
+//                                Toast.makeText(LoginActivity.this, "Either Email is wrong or Password", Toast.LENGTH_SHORT).show();
+//                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Login_Responce> call, Throwable t) {
+                            Toast.makeText(LoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
             } else {
                 Toast.makeText(LoginActivity.this, "Check Credential", Toast.LENGTH_SHORT).show();
