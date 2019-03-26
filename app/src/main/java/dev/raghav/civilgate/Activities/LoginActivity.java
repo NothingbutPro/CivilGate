@@ -1,8 +1,10 @@
 package dev.raghav.civilgate.Activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -16,8 +18,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Iterator;
+
+import javax.net.ssl.HttpsURLConnection;
+
 import dev.raghav.civilgate.Api.Api;
+import dev.raghav.civilgate.Api.Long_Login;
 import dev.raghav.civilgate.Const_Files.Retro_Urls;
+import dev.raghav.civilgate.Const_Files.ServiceGenerator;
 import dev.raghav.civilgate.Parsingfiles.LoginReg.Login_Credential;
 import dev.raghav.civilgate.Parsingfiles.LoginReg.Login_Responce;
 import dev.raghav.civilgate.R;
@@ -26,12 +45,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class LoginActivity  extends AppCompatActivity {
+    private ProgressDialog dialog;
     TextView NewRegister;
     Button Btn_Signin;
-    EditText emailfx , passwordtxt;
-    AlertDialog.Builder  builder;
+    EditText emailfx, passwordtxt;
+    AlertDialog.Builder builder;
     final String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     private int MY_PERMISSIONS_REQUESTS = 141;
 
@@ -39,79 +60,91 @@ public class LoginActivity  extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-         builder = new AlertDialog.Builder(this);
-       // getSupportActionBar().hide();
+        builder = new AlertDialog.Builder(this);
+        // getSupportActionBar().hide();
         emailfx = findViewById(R.id.emailfx);
         passwordtxt = findViewById(R.id.passwordtxt);
-        NewRegister=findViewById(R.id.new_reg);
-        Btn_Signin=findViewById(R.id.button_signin);
+        NewRegister = findViewById(R.id.new_reg);
+        Btn_Signin = findViewById(R.id.button_signin);
 
         checkforpermission();
 
-        NewRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(intent);
-            }
+        NewRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
 
-       Btn_Signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(checkvalidem())
-                {
-//                    Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-//                    startActivity(intent);
-                    Retrofit RetroLogin = new Retrofit.Builder()
-                .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
-                .build();
-                    Api RegApi = RetroLogin.create(Api.class);
-                    Call<Login_Responce> login_responceCall = RegApi.Login_that_dk(emailfx.getText().toString() , passwordtxt.getText().toString());
-                    login_responceCall.enqueue(new Callback<Login_Responce>() {
-                        @Override
-                        public void onResponse(Call<Login_Responce> call, Response<Login_Responce> response) {
-                            Log.d("string" , ""+response.body().getResponceString());
-//                            if(!response.body().getResponceString().equals(false))
-//                            {
-                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                                startActivity(intent);
-//                            }else{
-//                                Toast.makeText(LoginActivity.this, "Either Email is wrong or Password", Toast.LENGTH_SHORT).show();
-//                            }
+        Btn_Signin.setOnClickListener(v -> {
+            if (checkvalidem()) {
+                new Do_Login(emailfx.getText().toString(), passwordtxt.getText().toString()).execute();
+//               Api loginService =
+//                       ServiceGenerator.createService(Api.class, "email", "password");
+//               Call<Login_Responce> call = loginService.basicLogin();
+//               call.enqueue(new Callback<Login_Responce >() {
+//                                @Override
+//                                public void onResponse(Call<Login_Responce> call, Response<Login_Responce> response) {
+//                                    Toast.makeText(LoginActivity.this, "jskfsdfn", Toast.LENGTH_SHORT).show();
+//
+////                                    if (response.isSuccessful()) {
+////                                        Toa
+////                                        // user object available
+////                                    } else {
+////                                        // error response, no access to resource?
+////                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<Login_Responce> call, Throwable t) {
+//                                    // something went completely south (like no internet connection)
+//                                    Log.d("Error", t.getMessage());
+//                                }
+//                                });
+//                    Retrofit RetroLogin = new Retrofit.Builder()
+//                .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//                    Api RegApi = RetroLogin.create(Api.class);
+//                    Call<Login_Responce> login_responceCall = RegApi.Login_that_dk(emailfx.getText().toString() , passwordtxt.getText().toString());
+//                    login_responceCall.enqueue(new Callback<Login_Responce>() {
+//                        @Override
+//                        public void onResponse(Call<Login_Responce> call, Response<Login_Responce> response) {
+//                          //  Log.d("string" , ""+response.body().getResponceString());
+////                            if(!response.body().getResponceString().equals(false))
+////                            {
+//                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+////                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+////                                startActivity(intent);
+////                            }else{
+////                                Toast.makeText(LoginActivity.this, "Either Email is wrong or Password", Toast.LENGTH_SHORT).show();
+////                            }
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<Login_Responce> call, Throwable t) {
+//                            Toast.makeText(LoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
 
-                        }
-
-                        @Override
-                        public void onFailure(Call<Login_Responce> call, Throwable t) {
-                            Toast.makeText(LoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                }else{
-                    Toast.makeText(LoginActivity.this, "Check Credential", Toast.LENGTH_SHORT).show();
-                }
-
-
+            } else {
+                Toast.makeText(LoginActivity.this, "Check Credential", Toast.LENGTH_SHORT).show();
             }
+
+
         });
     }
 
     private boolean checkvalidem() {
         Boolean wth = false;
-        if(emailfx.getText().toString().length() ==0 && passwordtxt.getText().toString().length() ==0)
-        {
+        if (emailfx.getText().toString().length() == 0 && passwordtxt.getText().toString().length() == 0) {
 
             return wth;
-        }if(!emailfx.getText().toString().contains("@") && !emailfx.getText().toString().contains(".") && !emailfx.getText().toString().contains("com")&& passwordtxt.getText().toString().length() ==0)
-        {
-             emailfx.setError("Email is invalid");
-             passwordtxt.setError("Password is too short");
+        }
+        if (!emailfx.getText().toString().contains("@") && !emailfx.getText().toString().contains(".") && !emailfx.getText().toString().contains("com") && passwordtxt.getText().toString().length() == 0) {
+            emailfx.setError("Email is invalid");
+            passwordtxt.setError("Password is too short");
             return wth;
         }
-        if(passwordtxt.getText().toString().length() ==0)
-        {
+        if (passwordtxt.getText().toString().length() == 0) {
             passwordtxt.setError("Password is too short");
         }
         wth = true;
@@ -141,7 +174,7 @@ public class LoginActivity  extends AppCompatActivity {
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
-        }else{
+        } else {
             Toast.makeText(this, "Permission all done", Toast.LENGTH_SHORT).show();
         }// Here, thisActivity is the current activity
         if (ContextCompat.checkSelfPermission(this,
@@ -166,8 +199,7 @@ public class LoginActivity  extends AppCompatActivity {
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
-        }
-        else {
+        } else {
             Toast.makeText(this, "Permission all done", Toast.LENGTH_SHORT).show();
             // Permission has already been granted
         }
@@ -183,4 +215,141 @@ public class LoginActivity  extends AppCompatActivity {
     }
 
 
+    private class Do_Login extends AsyncTask<String, Void, String> {
+        ProgressDialog dialog;
+        String email,password;
+
+        public Do_Login(String email, String passowrd) {
+            this.email = email;
+            this.password = passowrd;
+        }
+
+        protected void onPreExecute() {
+            dialog = new ProgressDialog(LoginActivity.this);
+            dialog.show();
+
+        }
+
+        protected String doInBackground(String... arg0) {
+
+            try {
+
+                URL url = new URL("http://ihisaab.in/lms/api/login");
+
+                JSONObject postDataParams = new JSONObject();
+                postDataParams.put("email", email);
+                postDataParams.put("password", password);
+
+
+
+                Log.e("postDataParams", postDataParams.toString());
+
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setReadTimeout(15000  /*milliseconds*/);
+                conn.setConnectTimeout(15000  /*milliseconds*/);
+                conn.setRequestMethod("POST");
+                conn.setDoInput(true);
+                conn.setDoOutput(true);
+
+                OutputStream os = conn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(getPostDataString(postDataParams));
+
+                writer.flush();
+                writer.close();
+                os.close();
+
+                int responseCode = conn.getResponseCode();
+
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                    BufferedReader in = new BufferedReader(new
+                            InputStreamReader(
+                            conn.getInputStream()));
+
+                    StringBuffer sb = new StringBuffer("");
+                    String line = "";
+
+                    while ((line = in.readLine()) != null) {
+
+                        StringBuffer Ss = sb.append(line);
+                        Log.e("Ss", Ss.toString());
+                        sb.append(line);
+                        break;
+                    }
+
+                    in.close();
+                    return sb.toString();
+
+                } else {
+                    return new String("false : " + responseCode);
+                }
+            } catch (Exception e) {
+                return new String("Exception: " + e.getMessage());
+            }
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null) {
+                dialog.dismiss();
+
+                JSONObject jsonObject = null;
+                Log.e("PostRegistration", result.toString());
+                try {
+
+                    jsonObject = new JSONObject(result);
+                    String response = jsonObject.getString("responce");
+                    Log.e("Response is", response);
+                    String id = jsonObject.getJSONObject("data").getString("id");
+                    String name = jsonObject.getJSONObject("data").getString("id");
+                    String mobile  = jsonObject.getJSONObject("data").getString("id");
+                    String email = jsonObject.getJSONObject("data").getString("id");
+                    String password = jsonObject.getJSONObject("data").getString("id");
+                    String passout_year = jsonObject.getJSONObject("data").getString("id");
+                    String collage_name = jsonObject.getJSONObject("data").getString("id");
+                    String address = jsonObject.getJSONObject("data").getString("id");
+//                    File passout_year = jsonObject.getJSONObject("data").getString("id");
+//                    String passout_year = jsonObject.getJSONObject("data").getString("id");
+
+                    if (response.equalsIgnoreCase("True")) {
+                       Intent loginIntent = new Intent(LoginActivity.this , MainActivity.class);
+                       startActivity(loginIntent);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+        public String getPostDataString(JSONObject params) throws Exception {
+
+            StringBuilder result = new StringBuilder();
+            boolean first = true;
+
+            Iterator<String> itr = params.keys();
+
+            while (itr.hasNext()) {
+
+                String key = itr.next();
+                Object value = params.get(key);
+
+                if (first)
+                    first = false;
+                else
+                    result.append("&");
+
+                result.append(URLEncoder.encode(key, "UTF-8"));
+                result.append("=");
+                result.append(URLEncoder.encode(value.toString(), "UTF-8"));
+
+            }
+            return result.toString();
+        }
+    }
 }
