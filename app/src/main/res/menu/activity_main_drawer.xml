@@ -32,15 +32,15 @@
         android:id="@+id/group4">
         <item
             android:id="@+id/nav_my_test"
-            android:icon="@drawable/radio_icon"
+            android:icon="@drawable/ma_tests"
             android:title="My Test" />
     </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group5">
         <item
-            android:id="@+id/nav_report"
-            android:icon="@drawable/report_icon"
-            android:title="Reports" />
+            android:id="@+id/nav_group"
+            android:icon="@drawable/groupd"
+            android:title="Groups" />
     </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group6">
@@ -70,26 +70,35 @@
             android:icon="@drawable/offer_icon"
             android:title="Exclusive Offer" />
     </group>
+
     <group android:checkableBehavior="single"
         android:id="@+id/group10">
         <item
             android:id="@+id/nav_ask_expert"
-            android:icon="@drawable/expert_icon"
+            android:icon="@drawable/ask_exp"
             android:title="Ask an Expert" />
     </group>
+
     <group android:checkableBehavior="single"
         android:id="@+id/group11">
         <item
             android:id="@+id/nav_rate_us"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/rate_us"
             android:title="Rate Us" />
     </group>
     <group android:checkableBehavior="single"
         android:id="@+id/group12">
         <item
             android:id="@+id/logout"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/logout"
             android:title="Logout" />
+    </group>
+        <group android:checkableBehavior="single"
+        android:id="@+id/group13">
+        <item
+            android:id="@+id/aboutus"
+            android:icon="@drawable/about_us"
+            android:title="About Us" />
     </group>
 
     </group>

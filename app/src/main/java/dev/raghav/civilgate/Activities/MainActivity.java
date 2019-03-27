@@ -1,8 +1,12 @@
 package dev.raghav.civilgate.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,28 +16,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import dev.raghav.civilgate.Frag_granades.Home;
+import dev.raghav.civilgate.Parsingfiles.LoginReg.Login_Responce;
 import dev.raghav.civilgate.R;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+   Response<Login_Responce> response;
+   Fragment mainFragment =null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
+//putt home frags
+        mainFragment = new Home();
+        LoadGodamnFrags(mainFragment);
+        //
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -55,6 +58,17 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().getItem(10).setActionView(R.layout.menu_image);
         navigationView.getMenu().getItem(11).setActionView(R.layout.menu_image);
         navigationView.setItemIconTintList(null);
+//        response = getIntent().getStringArrayExtra("respoce");
+
+//        Toast.makeText(this, ""+response.body().getResponce() , Toast.LENGTH_SHORT).show();
+    }
+
+    private Fragment LoadGodamnFrags(Fragment mainFragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.dasboard_frame , mainFragment);
+        fragmentTransaction.commit();
+        return  mainFragment;
     }
 
     @Override
@@ -95,20 +109,36 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        }
-//        else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
+        if (id == R.id.nav_homepage) {
+            // Handle the camera action
+        } else if (id == R.id.nav_profile) {
+
+        } else if (id == R.id.nav_buy_package) {
+
+        } else if (id == R.id.nav_my_test) {
+
+        }
+        else if (id == R.id.nav_group) {
+
+        } else if (id == R.id.nav_bookmark) {
+
+        } else if (id == R.id.nav_news) {
+
+        } else if (id == R.id.nav_offers) {
+
+        } else if (id == R.id.nav_ex_offer) {
+
+        }else if (id == R.id.nav_ask_expert) {
+
+        }else if (id == R.id.nav_rate_us) {
+
+        }else if (id == R.id.logout) {
+
+        }else if (id == R.id.aboutus) {
+            Intent aboutIntent = new Intent(MainActivity.this , About_all.class);
+            startActivity(aboutIntent);
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

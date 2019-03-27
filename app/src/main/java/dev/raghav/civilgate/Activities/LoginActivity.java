@@ -36,7 +36,6 @@ import javax.net.ssl.HttpsURLConnection;
 import dev.raghav.civilgate.Api.Api;
 import dev.raghav.civilgate.Api.Long_Login;
 import dev.raghav.civilgate.Const_Files.Retro_Urls;
-import dev.raghav.civilgate.Const_Files.ServiceGenerator;
 import dev.raghav.civilgate.Parsingfiles.LoginReg.Login_Credential;
 import dev.raghav.civilgate.Parsingfiles.LoginReg.Login_Responce;
 import dev.raghav.civilgate.R;
@@ -75,6 +74,9 @@ public class LoginActivity  extends AppCompatActivity {
         });
 
         Btn_Signin.setOnClickListener(v -> {
+            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+            finish();
             if (checkvalidem()) {
                // new Do_Login(emailfx.getText().toString(), passwordtxt.getText().toString()).execute();
 //               Api loginService =
@@ -99,6 +101,7 @@ public class LoginActivity  extends AppCompatActivity {
 //                                    Log.d("Error", t.getMessage());
 //                                }
 //                                });
+
                     Retrofit RetroLogin = new Retrofit.Builder()
                 .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -108,14 +111,17 @@ public class LoginActivity  extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<Login_Responce> call, Response<Login_Responce> response) {
                             Log.d("string" , ""+response.body().getResponce());
-//                            if(!response.body().getResponceString().equals(false))
-//                            {
+//                            Log.d("string" , ""+response.body().getData().getEmail());
+                            if(!response.body().getResponce().equals(false))
+                            {
                                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-//                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-//                                startActivity(intent);
-//                            }else{
-//                                Toast.makeText(LoginActivity.this, "Either Email is wrong or Password", Toast.LENGTH_SHORT).show();
-//                            }
+                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                intent.putExtra("respoce", ""+response);
+                                startActivity(intent);
+                                finish();
+                            }else{
+                                Toast.makeText(LoginActivity.this, "Either Email is wrong or Password", Toast.LENGTH_SHORT).show();
+                            }
 
                         }
 
@@ -215,141 +221,141 @@ public class LoginActivity  extends AppCompatActivity {
     }
 
 
-    private class Do_Login extends AsyncTask<String, Void, String> {
-        ProgressDialog dialog;
-        String email,password;
-
-        public Do_Login(String email, String passowrd) {
-            this.email = email;
-            this.password = passowrd;
-        }
-
-        protected void onPreExecute() {
-            dialog = new ProgressDialog(LoginActivity.this);
-            dialog.show();
-
-        }
-
-        protected String doInBackground(String... arg0) {
-
-            try {
-
-                URL url = new URL("http://ihisaab.in/lms/api/login");
-
-                JSONObject postDataParams = new JSONObject();
-                postDataParams.put("email", email);
-                postDataParams.put("password", password);
-
-
-
-                Log.e("postDataParams", postDataParams.toString());
-
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(15000  /*milliseconds*/);
-                conn.setConnectTimeout(15000  /*milliseconds*/);
-                conn.setRequestMethod("POST");
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(getPostDataString(postDataParams));
-
-                writer.flush();
-                writer.close();
-                os.close();
-
-                int responseCode = conn.getResponseCode();
-
-                if (responseCode == HttpsURLConnection.HTTP_OK) {
-
-                    BufferedReader in = new BufferedReader(new
-                            InputStreamReader(
-                            conn.getInputStream()));
-
-                    StringBuffer sb = new StringBuffer("");
-                    String line = "";
-
-                    while ((line = in.readLine()) != null) {
-
-                        StringBuffer Ss = sb.append(line);
-                        Log.e("Ss", Ss.toString());
-                        sb.append(line);
-                        break;
-                    }
-
-                    in.close();
-                    return sb.toString();
-
-                } else {
-                    return new String("false : " + responseCode);
-                }
-            } catch (Exception e) {
-                return new String("Exception: " + e.getMessage());
-            }
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                dialog.dismiss();
-
-                JSONObject jsonObject = null;
-                Log.e("PostRegistration", result.toString());
-                try {
-
-                    jsonObject = new JSONObject(result);
-                    String response = jsonObject.getString("responce");
-                    Log.e("Response is", response);
-                    String id = jsonObject.getJSONObject("data").getString("id");
-                    String name = jsonObject.getJSONObject("data").getString("id");
-                    String mobile  = jsonObject.getJSONObject("data").getString("id");
-                    String email = jsonObject.getJSONObject("data").getString("id");
-                    String password = jsonObject.getJSONObject("data").getString("id");
-                    String passout_year = jsonObject.getJSONObject("data").getString("id");
-                    String collage_name = jsonObject.getJSONObject("data").getString("id");
-                    String address = jsonObject.getJSONObject("data").getString("id");
-//                    File passout_year = jsonObject.getJSONObject("data").getString("id");
+//    private class Do_Login extends AsyncTask<String, Void, String> {
+//        ProgressDialog dialog;
+//        String email,password;
+//
+//        public Do_Login(String email, String passowrd) {
+//            this.email = email;
+//            this.password = passowrd;
+//        }
+//
+//        protected void onPreExecute() {
+//            dialog = new ProgressDialog(LoginActivity.this);
+//            dialog.show();
+//
+//        }
+//
+//        protected String doInBackground(String... arg0) {
+//
+//            try {
+//
+//                URL url = new URL("http://ihisaab.in/lms/api/login");
+//
+//                JSONObject postDataParams = new JSONObject();
+//                postDataParams.put("email", email);
+//                postDataParams.put("password", password);
+//
+//
+//
+//                Log.e("postDataParams", postDataParams.toString());
+//
+//                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//                conn.setReadTimeout(15000  /*milliseconds*/);
+//                conn.setConnectTimeout(15000  /*milliseconds*/);
+//                conn.setRequestMethod("POST");
+//                conn.setDoInput(true);
+//                conn.setDoOutput(true);
+//
+//                OutputStream os = conn.getOutputStream();
+//                BufferedWriter writer = new BufferedWriter(
+//                        new OutputStreamWriter(os, "UTF-8"));
+//                writer.write(getPostDataString(postDataParams));
+//
+//                writer.flush();
+//                writer.close();
+//                os.close();
+//
+//                int responseCode = conn.getResponseCode();
+//
+//                if (responseCode == HttpsURLConnection.HTTP_OK) {
+//
+//                    BufferedReader in = new BufferedReader(new
+//                            InputStreamReader(
+//                            conn.getInputStream()));
+//
+//                    StringBuffer sb = new StringBuffer("");
+//                    String line = "";
+//
+//                    while ((line = in.readLine()) != null) {
+//
+//                        StringBuffer Ss = sb.append(line);
+//                        Log.e("Ss", Ss.toString());
+//                        sb.append(line);
+//                        break;
+//                    }
+//
+//                    in.close();
+//                    return sb.toString();
+//
+//                } else {
+//                    return new String("false : " + responseCode);
+//                }
+//            } catch (Exception e) {
+//                return new String("Exception: " + e.getMessage());
+//            }
+//
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String result) {
+//            if (result != null) {
+//                dialog.dismiss();
+//
+//                JSONObject jsonObject = null;
+//                Log.e("PostRegistration", result.toString());
+//                try {
+//
+//                    jsonObject = new JSONObject(result);
+//                    String response = jsonObject.getString("responce");
+//                    Log.e("Response is", response);
+//                    String id = jsonObject.getJSONObject("data").getString("id");
+//                    String name = jsonObject.getJSONObject("data").getString("id");
+//                    String mobile  = jsonObject.getJSONObject("data").getString("id");
+//                    String email = jsonObject.getJSONObject("data").getString("id");
+//                    String password = jsonObject.getJSONObject("data").getString("id");
 //                    String passout_year = jsonObject.getJSONObject("data").getString("id");
-
-                    if (response.equalsIgnoreCase("True")) {
-                       Intent loginIntent = new Intent(LoginActivity.this , MainActivity.class);
-                       startActivity(loginIntent);
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
-
-        public String getPostDataString(JSONObject params) throws Exception {
-
-            StringBuilder result = new StringBuilder();
-            boolean first = true;
-
-            Iterator<String> itr = params.keys();
-
-            while (itr.hasNext()) {
-
-                String key = itr.next();
-                Object value = params.get(key);
-
-                if (first)
-                    first = false;
-                else
-                    result.append("&");
-
-                result.append(URLEncoder.encode(key, "UTF-8"));
-                result.append("=");
-                result.append(URLEncoder.encode(value.toString(), "UTF-8"));
-
-            }
-            return result.toString();
-        }
-    }
+//                    String collage_name = jsonObject.getJSONObject("data").getString("id");
+//                    String address = jsonObject.getJSONObject("data").getString("id");
+////                    File passout_year = jsonObject.getJSONObject("data").getString("id");
+////                    String passout_year = jsonObject.getJSONObject("data").getString("id");
+//
+//                    if (response.equalsIgnoreCase("True")) {
+//                       Intent loginIntent = new Intent(LoginActivity.this , MainActivity.class);
+//                       startActivity(loginIntent);
+//                    }
+//
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }
+//
+//        public String getPostDataString(JSONObject params) throws Exception {
+//
+//            StringBuilder result = new StringBuilder();
+//            boolean first = true;
+//
+//            Iterator<String> itr = params.keys();
+//
+//            while (itr.hasNext()) {
+//
+//                String key = itr.next();
+//                Object value = params.get(key);
+//
+//                if (first)
+//                    first = false;
+//                else
+//                    result.append("&");
+//
+//                result.append(URLEncoder.encode(key, "UTF-8"));
+//                result.append("=");
+//                result.append(URLEncoder.encode(value.toString(), "UTF-8"));
+//
+//            }
+//            return result.toString();
+//        }
+//    }
 }

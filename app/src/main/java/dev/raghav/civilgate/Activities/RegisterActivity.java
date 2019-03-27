@@ -39,15 +39,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import dev.raghav.civilgate.Const_Files.Retro_Urls;
 import dev.raghav.civilgate.Parsingfiles.LoginReg.RegisPars_responce;
 import dev.raghav.civilgate.R;
 import dev.raghav.civilgate.Api.Api;
 
 import dev.raghav.civilgate.Api.RetrofitClientApi;
 import dev.raghav.civilgate.Utils.Utilities;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
