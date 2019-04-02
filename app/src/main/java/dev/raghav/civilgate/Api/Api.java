@@ -1,13 +1,15 @@
 package dev.raghav.civilgate.Api;
-
-
-
 import android.database.Observable;
 
 import java.io.File;
 
+import dev.raghav.civilgate.Const_Files.Level_Java;
 import dev.raghav.civilgate.Const_Files.Retro_Urls;
-import dev.raghav.civilgate.Other_Parsing_Files.Get_level;
+import dev.raghav.civilgate.Other_Parsing_Files.Exam_Test;
+import dev.raghav.civilgate.Other_Parsing_Files.Exam_Test_Data;
+import dev.raghav.civilgate.Other_Parsing_Files.Get_About;
+import dev.raghav.civilgate.Other_Parsing_Files.Get_Level;
+import dev.raghav.civilgate.Other_Parsing_Files.Test_Question;
 import dev.raghav.civilgate.Parsingfiles.LoginReg.Login_Responce;
 import dev.raghav.civilgate.Parsingfiles.LoginReg.RegisPars_responce;
 import okhttp3.MultipartBody;
@@ -27,7 +29,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface Api {
-
 
     @FormUrlEncoded
     @POST("Ragistration")
@@ -58,6 +59,15 @@ Call<Login_Responce> Login_that_dk(
 );
 @Headers("Content-Type: application/x-www-form-urlencoded")
 @GET(Retro_Urls.About_us)
-Call<Get_level> getLevelCall();
+Call<Get_About> TellAbout();
+@Headers("Content-Type: application/x-www-form-urlencoded")
+@GET(Retro_Urls.Get_level)
+Call<Get_Level> GetLevels();
+//@Headers("Content-Type: application/x-www-form-urlencoded")
+@POST(Retro_Urls.Get_GetExam)
+Call<Exam_Test> Get_GetExam();
+@Headers("Content-Type: application/x-www-form-urlencoded")
+@POST(Retro_Urls.GetQuestion)
+Call<Test_Question> GetQuestion();
 
 }
