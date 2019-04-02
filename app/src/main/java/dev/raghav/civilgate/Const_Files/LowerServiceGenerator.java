@@ -5,29 +5,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
-
-import org.apache.http.util.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Credentials;
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class ServiceGenerator extends FragmentStatePagerAdapter {
+public class LowerServiceGenerator extends FragmentStatePagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
     Context context;
-    public ServiceGenerator(FragmentManager fm , Context c) {
+    public LowerServiceGenerator(FragmentManager fm , Context c) {
         super(fm);
         this.context = c;
     }

@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import dev.raghav.civilgate.Api.Api;
 import dev.raghav.civilgate.Const_Files.Retro_Urls;
-import dev.raghav.civilgate.Other_Parsing_Files.Get_level;
+import dev.raghav.civilgate.Other_Parsing_Files.Get_About;
 import dev.raghav.civilgate.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,27 +33,15 @@ public class About_all extends AppCompatActivity {
                 .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
                 .build();
         Api AbloutApi = RetroLogin.create(Api.class);
-        Call<Get_level> Get_levelCall = AbloutApi.getLevelCall();
-        Get_levelCall.enqueue(new Callback<Get_level>() {
+        Call<Get_About> get_aboutCall = AbloutApi.TellAbout();
+        get_aboutCall.enqueue(new Callback<Get_About>() {
             @Override
-            public void onResponse(Call<Get_level> call, Response<Get_level> response) {
-                Aboutusdialog.dismiss();
-                if(response.isSuccessful())
-                {
-                    Toast.makeText(About_all.this, ""+response.body().getData().getDescription(), Toast.LENGTH_SHORT).show();
-                    Log.d("responce is" , ""+response.body().getData().getDescription());
-//                    about_web.loadData(response.body().getData().getDescription() , "text/html" , "UTF-8");
-
-                    about_web.setText(Html.fromHtml(response.body().getData().getDescription()));
-                }else {
-                    Toast.makeText(About_all.this, ""+response.body().getData().getDescription(), Toast.LENGTH_SHORT).show();
-                    Log.d("responce is" , ""+response.body().getData().getDescription());
-                }
-
+            public void onResponse(Call<Get_About> call, Response<Get_About> response) {
+                Toast.makeText(About_all.this, ""+response.body().getData().getDescription(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onFailure(Call<Get_level> call, Throwable t) {
+            public void onFailure(Call<Get_About> call, Throwable t) {
 
             }
         });

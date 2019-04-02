@@ -3,7 +3,7 @@ package dev.raghav.civilgate.Other_Parsing_Files;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Get_Level_Data {
+public class Get_About_Data {
     @SerializedName("id")
     @Expose
     private String id;
