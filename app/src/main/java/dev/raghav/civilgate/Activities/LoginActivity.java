@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -12,31 +11,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Iterator;
-
-import javax.net.ssl.HttpsURLConnection;
-
+import dev.raghav.civilgate.SessionManage.SessionManager;
 import dev.raghav.civilgate.Api.Api;
-import dev.raghav.civilgate.Api.Long_Login;
 import dev.raghav.civilgate.Const_Files.Retro_Urls;
-import dev.raghav.civilgate.Parsingfiles.LoginReg.Login_Credential;
 import dev.raghav.civilgate.Parsingfiles.LoginReg.Login_Responce;
 import dev.raghav.civilgate.R;
 import retrofit2.Call;
@@ -44,7 +26,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class LoginActivity  extends AppCompatActivity {
     private ProgressDialog dialog;
@@ -54,12 +35,13 @@ public class LoginActivity  extends AppCompatActivity {
     AlertDialog.Builder builder;
     final String[] permissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
     private int MY_PERMISSIONS_REQUESTS = 141;
-
+    SessionManager manager;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         builder = new AlertDialog.Builder(this);
+        manager = new SessionManager(this);
         // getSupportActionBar().hide();
         emailfx = findViewById(R.id.emailfx);
         passwordtxt = findViewById(R.id.passwordtxt);
@@ -74,9 +56,9 @@ public class LoginActivity  extends AppCompatActivity {
         });
 
         Btn_Signin.setOnClickListener(v -> {
-            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-            startActivity(intent);
-            finish();
+//            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+//            startActivity(intent);
+//            finish();
             if (checkvalidem()) {
                // new Do_Login(emailfx.getText().toString(), passwordtxt.getText().toString()).execute();
 //               Api loginService =
@@ -116,6 +98,7 @@ public class LoginActivity  extends AppCompatActivity {
                             {
                                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                                 Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                manager.serverLogin(response.body().getData().getId() , response.body().getData().getName(),response.body().getData().getStatus());
                                 intent.putExtra("respoce", ""+response);
                                 startActivity(intent);
                                 finish();

@@ -2,40 +2,27 @@ package dev.raghav.civilgate.Frag_granades;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import dev.raghav.civilgate.Activities.Level_Tab_Activities;
+import dev.raghav.civilgate.SessionManage.SessionManager;
 import dev.raghav.civilgate.Api.Api;
-import dev.raghav.civilgate.Const_Files.LowerServiceGenerator;
 import dev.raghav.civilgate.Const_Files.Retro_Urls;
-import dev.raghav.civilgate.Const_Files.ServiceGenerator;
 import dev.raghav.civilgate.Const_Files.Tests_Name;
 import dev.raghav.civilgate.Dapter.Test_Adapter;
 import dev.raghav.civilgate.Other_Parsing_Files.Exam_Test;
-import dev.raghav.civilgate.Other_Parsing_Files.Exam_Test_Data;
-import dev.raghav.civilgate.Other_Parsing_Files.Get_About;
 import dev.raghav.civilgate.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Basic_Level_Test_Fragment  extends Fragment {
     private static  long Progess_time_out = 0;
-
+    SessionManager manager;
     Test_Adapter testAdapter;
     RecyclerView tests_recy;
     Thread thread;
@@ -66,7 +53,7 @@ public class Basic_Level_Test_Fragment  extends Fragment {
         tests_recy = BasicView.findViewById(R.id.tests_recy);
        // lowerServiceGenerator = new LowerServiceGenerator(getActivity().getSupportFragmentManager() , getActivity());
       //  ExamprogressDialog = new ProgressDialog(getActivity());
-
+        manager = new SessionManager(getActivity());
 
         if (getAllLowerLevels())
         {
@@ -82,7 +69,7 @@ public class Basic_Level_Test_Fragment  extends Fragment {
         ProgressDialog ExamprogressDialog;
         ExamprogressDialog = new ProgressDialog(getActivity());
         ExamprogressDialog.setMax(100);
-        ExamprogressDialog.setTitle("Please wait...................................................");
+        ExamprogressDialog.setTitle("Getting your level information");
         ExamprogressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         ExamprogressDialog.setCancelable(false);
         ExamprogressDialog.show();
@@ -90,7 +77,7 @@ public class Basic_Level_Test_Fragment  extends Fragment {
                 .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
                 .build();
         Api EmamApi = RetroGEtExam.create(Api.class);
-        Call<Exam_Test> exam_testCall = EmamApi.Get_GetExam();
+        Call<Exam_Test> exam_testCall = EmamApi.Get_GetExam(manager.getCoustId());
         exam_testCall.enqueue(new Callback<Exam_Test>() {
             @Override
             public void onResponse(Call<Exam_Test> call, Response<Exam_Test> response) {
@@ -101,7 +88,7 @@ public class Basic_Level_Test_Fragment  extends Fragment {
                     ExamprogressDialog.dismiss();
 //                    if(response.body().getResponce() == true)
 //                    {
-                        Log.e("elements" , "are"+response.body());
+                        Log.e("elements" , " are "+response.body());
                         p =new int[response.body().getData().size()];
                         for(int i=0;i<response.body().getData().size();i++)
                         {
@@ -109,7 +96,7 @@ public class Basic_Level_Test_Fragment  extends Fragment {
 //                            p[0] =i;
                             String s = response.body().getData().get(i).getTestName();
                             Log.e("elements" , "are"+response.body().getData().get(0).getTestName());
-                            Tests_Name tests_name = new Tests_Name(response.body().getData().get(i).getTestName() , response.body().getData().get(i).getTestStartDate() , response.body().getData().get(i).getTestEndDate(),response.body().getData().get(i).getTesttime());
+                            Tests_Name tests_name = new Tests_Name(response.body().getData().get(i).getTestName() , response.body().getData().get(i).getTestStartDate() , response.body().getData().get(i).getTestEndDate(),response.body().getData().get(i).getTesttime() , response.body().getData().get(i).getSubjectIds());
                             tests_names.add(tests_name);
                         }
 

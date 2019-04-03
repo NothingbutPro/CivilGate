@@ -15,9 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Test_Activities.Main_Test_Activity"
+            android:label="@string/title_activity_main__test_"></activity>
+        <activity
             android:name=".Activities.Level_Tab_Activities"
             android:label="@string/title_activity_level__tab__activities"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.About_all" />
 
         <provider

@@ -4,13 +4,27 @@ import dev.raghav.civilgate.R;
 
 public class Tests_Name {
 
- public String test_name , test_start_date,test_end_date ;
+ public String test_name , test_start_date,test_end_date,subject_ids ;
     public   float test_len;
 
-    public Tests_Name(String test_name, String test_start_date, String test_end_date, float test_len) {
+    public Tests_Name(String test_name, String test_start_date, String test_end_date, float test_len , String subject_ids) {
         this.test_name = test_name;
         this.test_start_date = test_start_date;
         this.test_end_date = test_end_date;
+        this.test_len = test_len;
+        this.subject_ids = subject_ids;
+
+    }
+
+    public String getSubject_ids() {
+        return subject_ids;
+    }
+
+    public void setSubject_ids(String subject_ids) {
+        this.subject_ids = subject_ids;
+    }
+
+    public void setTest_len(float test_len) {
         this.test_len = test_len;
     }
 

@@ -5,34 +5,26 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import dev.raghav.civilgate.Api.Api;
 import dev.raghav.civilgate.Const_Files.Level_Java;
 import dev.raghav.civilgate.Const_Files.Retro_Urls;
 import dev.raghav.civilgate.Const_Files.ServiceGenerator;
-import dev.raghav.civilgate.Dapter.Level_Adapter;
 import dev.raghav.civilgate.Frag_granades.Advanced_Level_Test_Fragment;
 import dev.raghav.civilgate.Frag_granades.Basic_Level_Test_Fragment;
 import dev.raghav.civilgate.Frag_granades.Daily_Level_Test_Fragment;
-import dev.raghav.civilgate.Frag_granades.Home;
 import dev.raghav.civilgate.Frag_granades.Intermediate_Level_Test_Fragment;
 import dev.raghav.civilgate.Frag_granades.Mock_Level_Test_Fragment;
 import dev.raghav.civilgate.Frag_granades.Subject_Wise_Level_Test_Fragment;
 import dev.raghav.civilgate.Other_Parsing_Files.Get_Level;
-import dev.raghav.civilgate.Other_Parsing_Files.New_Level_Data;
 import dev.raghav.civilgate.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,10 +38,22 @@ public class Level_Tab_Activities extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
      ProgressDialog progressDialog;
+
      //public List<Level_Java> level_javaList = new ArrayList<>();
     private ArrayList<Level_Java> level_javas ;
     private static final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
     //Level_Adapter level_adapter;
+
+    @Override
+    protected void onStart() {
+//        progressDialog = new ProgressDialog(this);
+//        progressDialog.setMax(1000);
+//        progressDialog.setTitle("please wait");
+//        progressDialog.setCancelable(false);
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//        progressDialog.show();
+        super.onStart();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,14 +91,12 @@ public class Level_Tab_Activities extends AppCompatActivity {
     }
 
     private Boolean getAllLevels() {
-
-
         Retrofit LEvelRetrofit = new Retrofit.Builder().baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create()).build();
         Api LevelApi = LEvelRetrofit.create(Api.class);
         Call<Get_Level> get_levelCall = LevelApi.GetLevels();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMax(100);
-        progressDialog.setTitle("please wait");
+        progressDialog.setMax(1000);
+        progressDialog.setTitle("Getting Your Data");
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
@@ -104,6 +106,7 @@ public class Level_Tab_Activities extends AppCompatActivity {
             public void onResponse(Call<Get_Level> call, Response<Get_Level> response) {
                 if(response.body().getResponce().booleanValue() == true)
                 {
+                    progressDialog.dismiss();
                     Get_Level getLevel = response.body();
                     Log.e("responce" , ""+getLevel.getData().size());
                     int n = getLevel.getData().size();
@@ -205,7 +208,7 @@ public class Level_Tab_Activities extends AppCompatActivity {
 
             }
         });
-        progressDialog.dismiss();
+
         return true;
     }
 

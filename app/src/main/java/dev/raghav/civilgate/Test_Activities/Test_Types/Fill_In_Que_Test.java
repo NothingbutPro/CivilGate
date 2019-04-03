@@ -1,4 +1,4 @@
-package dev.raghav.civilgate.Frag_granades;
+package dev.raghav.civilgate.Test_Activities.Test_Types;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,16 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import dev.raghav.civilgate.SessionManage.SessionManager;
 import dev.raghav.civilgate.R;
 
-public class Daily_Level_Test_Fragment extends Fragment {
-    SessionManager sessionManager;
+public class Fill_In_Que_Test extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View Daily_LevelView = inflater.inflate(R.layout.daily_level_layout , container , false);
-        return Daily_LevelView;
-//        return super.onCreateView(inflater, container, savedInstanceState);
+        View FillView = inflater.inflate(R.layout.fill_the_que , container , false);
+        return FillView;
+        //return super.onCreateView(inflater, container, savedInstanceState);
     }
 }
