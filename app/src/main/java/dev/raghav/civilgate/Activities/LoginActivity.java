@@ -56,9 +56,9 @@ public class LoginActivity  extends AppCompatActivity {
         });
 
         Btn_Signin.setOnClickListener(v -> {
-//            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-//            startActivity(intent);
-//            finish();
+            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+            startActivity(intent);
+            finish();
             if (checkvalidem()) {
                // new Do_Login(emailfx.getText().toString(), passwordtxt.getText().toString()).execute();
 //               Api loginService =
@@ -110,7 +110,10 @@ public class LoginActivity  extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<Login_Responce> call, Throwable t) {
+
+                            Log.d("cause" , ""+t.getCause());
                             Toast.makeText(LoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
+
                         }
                     });
 

@@ -9,10 +9,13 @@ import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.concurrent.TimeUnit;
+
 import dev.raghav.civilgate.Api.Api;
 import dev.raghav.civilgate.Const_Files.Retro_Urls;
 import dev.raghav.civilgate.Other_Parsing_Files.Get_About;
 import dev.raghav.civilgate.R;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,8 +32,11 @@ public class About_all extends AppCompatActivity {
         Aboutusdialog = new ProgressDialog(this);
         Aboutusdialog.show();
         about_web = findViewById(R.id.about_web);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .readTimeout(100,TimeUnit.SECONDS).build();
         Retrofit RetroLogin = new Retrofit.Builder()
-                .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(Retro_Urls.The_Base).client(client).addConverterFactory(GsonConverterFactory.create())
                 .build();
         Api AbloutApi = RetroLogin.create(Api.class);
         Call<Get_About> get_aboutCall = AbloutApi.TellAbout();

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import dev.raghav.civilgate.Api.Api;
 import dev.raghav.civilgate.Const_Files.Level_Java;
@@ -26,6 +27,8 @@ import dev.raghav.civilgate.Frag_granades.Mock_Level_Test_Fragment;
 import dev.raghav.civilgate.Frag_granades.Subject_Wise_Level_Test_Fragment;
 import dev.raghav.civilgate.Other_Parsing_Files.Get_Level;
 import dev.raghav.civilgate.R;
+import okhttp3.OkHttpClient;
+import okio.Timeout;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,7 +94,10 @@ public class Level_Tab_Activities extends AppCompatActivity {
     }
 
     private Boolean getAllLevels() {
-        Retrofit LEvelRetrofit = new Retrofit.Builder().baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create()).build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(150, TimeUnit.SECONDS)
+                .readTimeout(300,TimeUnit.SECONDS).writeTimeout(200 , TimeUnit.SECONDS).build();
+        Retrofit LEvelRetrofit = new Retrofit.Builder().client(client).baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create()).build();
         Api LevelApi = LEvelRetrofit.create(Api.class);
         Call<Get_Level> get_levelCall = LevelApi.GetLevels();
         progressDialog = new ProgressDialog(this);
@@ -205,7 +211,7 @@ public class Level_Tab_Activities extends AppCompatActivity {
 //
             @Override
             public void onFailure(Call<Get_Level> call, Throwable t) {
-
+                Log.d("cause" , ""+t.getCause());
             }
         });
 

@@ -54,6 +54,22 @@ public class Test_Question_Data {
     @Expose
     private String createdate;
 
+    public Test_Question_Data(String id, String subId, String que, String ans1, String ans2, String ans3, String ans4, String ans, String minusmark, String marks, String solution, String multipleAns, String status) {
+        this.id = id;
+        this.subId = subId;
+        this.que = que;
+        this.ans1 = ans1;
+        this.ans2 = ans2;
+        this.ans3 = ans3;
+        this.ans4 = ans4;
+        this.ans = ans;
+        this.minusmark = minusmark;
+        this.marks = marks;
+        this.solution = solution;
+        this.multipleAns = multipleAns;
+        this.status = status;
+    }
+
     public String getId() {
         return id;
     }

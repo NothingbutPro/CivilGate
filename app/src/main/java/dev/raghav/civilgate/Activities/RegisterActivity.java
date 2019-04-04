@@ -432,7 +432,7 @@ public class RegisterActivity extends AppCompatActivity {
             super.onPreExecute();
         }
 
-        public Final_Image_upload(File gate_photo_file, File gate_sign_file) {
+        public  Final_Image_upload(File gate_photo_file, File gate_sign_file) {
             this.gate_photo = gate_photo_file;
             this.gate_sign = gate_sign_file;
         }

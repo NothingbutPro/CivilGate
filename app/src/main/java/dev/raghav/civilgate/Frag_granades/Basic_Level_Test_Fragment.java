@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import dev.raghav.civilgate.SessionManage.SessionManager;
 import dev.raghav.civilgate.Api.Api;
@@ -24,6 +25,7 @@ import dev.raghav.civilgate.Const_Files.Tests_Name;
 import dev.raghav.civilgate.Dapter.Test_Adapter;
 import dev.raghav.civilgate.Other_Parsing_Files.Exam_Test;
 import dev.raghav.civilgate.R;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,6 +68,9 @@ public class Basic_Level_Test_Fragment  extends Fragment {
     }
 
     private boolean getAllLowerLevels() {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(150, TimeUnit.SECONDS)
+                .readTimeout(300,TimeUnit.SECONDS).writeTimeout(200 , TimeUnit.SECONDS).build();
         ProgressDialog ExamprogressDialog;
         ExamprogressDialog = new ProgressDialog(getActivity());
         ExamprogressDialog.setMax(100);
@@ -74,7 +79,7 @@ public class Basic_Level_Test_Fragment  extends Fragment {
         ExamprogressDialog.setCancelable(false);
         ExamprogressDialog.show();
         Retrofit RetroGEtExam = new Retrofit.Builder()
-                .baseUrl(Retro_Urls.The_Base).addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(Retro_Urls.The_Base).client(client).addConverterFactory(GsonConverterFactory.create())
                 .build();
         Api EmamApi = RetroGEtExam.create(Api.class);
         Call<Exam_Test> exam_testCall = EmamApi.Get_GetExam(manager.getCoustId());

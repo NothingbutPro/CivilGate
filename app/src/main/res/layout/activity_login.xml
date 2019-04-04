@@ -95,13 +95,15 @@
                 android:orientation="horizontal">
 
            <ImageView
+
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_weight="0.9"
                android:layout_gravity="start|center"
-               android:src="@drawable/email_icon"/>
+               app:srcCompat="@drawable/email_icon"/>
 
     <EditText
+        android:text="p@gmail.com"
         android:background="#fff"
         android:id="@+id/emailfx"
         android:layout_weight="0.1"
@@ -132,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.9"
                 android:layout_gravity="center"
-                android:src="@drawable/password_icon"/>
+                app:srcCompat="@drawable/password_icon"/>
 
             <!--<android.support.design.widget.TextInputLayout-->
                 <!--android:id="@+id/etPasswordLayout"-->
@@ -140,6 +142,7 @@
                 <!--android:layout_height="wrap_content"-->
                 <!--app:passwordToggleEnabled="true">-->
     <EditText
+        android:text="123456"
         android:id="@+id/passwordtxt"
         android:layout_weight="0.1"
         android:layout_width="match_parent"
