@@ -35,16 +35,19 @@ public class Questions_Adapter extends RecyclerView.Adapter<Questions_Adapter.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+
         for(int p=0;p< 20;p++)
         {
+            Log.d("value of p" , ""+p);
             myViewHolder.id.setText(String.valueOf(p));
-        }
 
+        }
     }
 
     @Override
     public int getItemCount() {
-        return questionsJJavas.size();
+        return 30;
+//        return questionsJJavas.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // init the item view's

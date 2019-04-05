@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -34,18 +35,24 @@ public class Main_Test_Activity extends AppCompatActivity {
         Questions_Adapter questions_adapter;
         RecyclerView quelinrecy;
         static int no_of_questions;
+        Toolbar toolbar_col;
         String student_id;
 
     List<Questions_jJava> questions_jJavaList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        toolbar_col = findViewById(R.id.toolbar_col);
+        setSupportActionBar(toolbar_col);
         setContentView(R.layout.activity_main__test_);
         student_id = getIntent().getStringExtra("sub_id");
         quelinrecy = findViewById(R.id.gridlay);
+
+        GridLayoutManager manager = new GridLayoutManager(this, 9, GridLayoutManager.VERTICAL, false);
+        quelinrecy.setLayoutManager(manager);
       //  quelinrecy.setAdapter(new SampleAdapter(getCurrentActivity()));
-        quelinrecy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-        quelinrecy.setHasFixedSize(true);
+//        quelinrecy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+//        quelinrecy.setHasFixedSize(true);
 //        quelinrecy.setHasFixedSize(true);
     //     set a GridLayoutManager with 3 number of columns , horizontal gravity and false value for reverseLayout to show the items from start to end
         //GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),5, LinearLayoutManager.HORIZONTAL,false);

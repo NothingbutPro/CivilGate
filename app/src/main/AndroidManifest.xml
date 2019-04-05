@@ -15,8 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".MAin_test_collpase"
+            android:label="@string/title_activity_main_test_collpase"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".Test_Activities.Main_Test_Activity"
-            android:label="@string/title_activity_main__test_"></activity>
+            android:label="@string/title_activity_main__test_" />
         <activity
             android:name=".Activities.Level_Tab_Activities"
             android:label="@string/title_activity_level__tab__activities"
