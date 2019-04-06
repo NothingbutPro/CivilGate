@@ -64,10 +64,11 @@ Call<Get_About> TellAbout();
 @GET(Retro_Urls.Get_level)
 Call<Get_Level> GetLevels();
 //@Headers("Content-Type: application/x-www-form-urlencoded")
-@POST(Retro_Urls.Get_GetExam)
-Call<Exam_Test> Get_GetExam();
+@GET(Retro_Urls.Get_GetExam)
+Call<Exam_Test> Get_GetExam(@Query("student_id") int student_id);
 @Headers("Content-Type: application/x-www-form-urlencoded")
+@FormUrlEncoded
 @POST(Retro_Urls.GetQuestion)
-Call<Test_Question> GetQuestion();
+Call<Test_Question> GetQuestion(@Field("subject_id") String subject_id);
 
 }

@@ -20,6 +20,7 @@ import dev.raghav.civilgate.R;
 public class Questions_Adapter extends RecyclerView.Adapter<Questions_Adapter.MyViewHolder> {
     List<Questions_jJava> questionsJJavas ;
     ArrayList personImages;
+    int p;
     Context context;
     public Questions_Adapter(Context context, List<Questions_jJava> questionsJJavas) {
         this.context = context;
@@ -35,19 +36,18 @@ public class Questions_Adapter extends RecyclerView.Adapter<Questions_Adapter.My
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
-
-        for(int p=0;p< 20;p++)
+        myViewHolder.id.setText(String.valueOf(questionsJJavas.get(i).getId()));
+        for(int p=0;p< 30;p++)
         {
             Log.d("value of p" , ""+p);
-            myViewHolder.id.setText(String.valueOf(p));
-
         }
+        p=p++;
     }
 
     @Override
     public int getItemCount() {
-        return 30;
-//        return questionsJJavas.size();
+//        return 30;
+       return questionsJJavas.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // init the item view's

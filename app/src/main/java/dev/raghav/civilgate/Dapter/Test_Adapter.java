@@ -68,7 +68,7 @@ public class Test_Adapter  extends RecyclerView.Adapter<Test_Adapter.MyViewHolde
            public void onClick(View v) {
                Toast.makeText(v.getContext(), "ids are "+tests_Name.getSubject_ids(), Toast.LENGTH_SHORT).show();
              //  Intent getquestionIntent = new Intent(v.getContext() , Main_Test_Activity.class);
-               Intent getquestionIntent = new Intent(v.getContext() , MAin_test_collpase.class);
+               Intent getquestionIntent = new Intent(v.getContext() , Main_Test_Activity.class);
                getquestionIntent.putExtra("sub_id" ,tests_Name.getSubject_ids() );
 //               getquestionIntent.putExtra("no_of_que" , tests_Name.)
                v.getContext().startActivity(getquestionIntent);

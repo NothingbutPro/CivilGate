@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,21 +43,26 @@ public class Main_Test_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        toolbar_col = findViewById(R.id.toolbar_col);
-        setSupportActionBar(toolbar_col);
-        setContentView(R.layout.activity_main__test_);
+//        toolbar_col = findViewById(R.id.toolbar_col);
+//        setSupportActionBar(toolbar_col);
+        //setContentView(R.layout.activity_main__test_);
+        setContentView(R.layout.activity_main_test_collpase);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         student_id = getIntent().getStringExtra("sub_id");
+        Toast.makeText(this, "student naME IS"+student_id, Toast.LENGTH_SHORT).show();
         quelinrecy = findViewById(R.id.gridlay);
 
         GridLayoutManager manager = new GridLayoutManager(this, 9, GridLayoutManager.VERTICAL, false);
         quelinrecy.setLayoutManager(manager);
       //  quelinrecy.setAdapter(new SampleAdapter(getCurrentActivity()));
-//        quelinrecy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+//        quelinrecy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
 //        quelinrecy.setHasFixedSize(true);
 //        quelinrecy.setHasFixedSize(true);
     //     set a GridLayoutManager with 3 number of columns , horizontal gravity and false value for reverseLayout to show the items from start to end
-        //GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),5, LinearLayoutManager.HORIZONTAL,false);
-    //    quelinrecy.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),5, LinearLayoutManager.HORIZONTAL,false);
+//        quelinrecy.setLayoutManager(gridLayoutManager); // set LayoutManager to RecyclerView
      //     call the constructor of CustomAdapter to send the reference and data to Adapter
 
 //        Log.e("jhsadsa" , ""+main_test_activity.student_id);
@@ -87,12 +93,12 @@ public class Main_Test_Activity extends AppCompatActivity {
                     Log.e("no of questiobn",""+questions_jJavaList.get(k).getId());
                 }
                 questions_adapter = new Questions_Adapter(Main_Test_Activity.this, questions_jJavaList);
-                quelinrecy.setHasFixedSize(true);
-                //   quelinrecy.setAdapter(questions_adapter); // set the Adapter to RecyclerView
+//                quelinrecy.setHasFixedSize(true);
+                   quelinrecy.setAdapter(questions_adapter); // set the Adapter to RecyclerView
                 //getAllQuestions(student_id);
             //    questions_adapter = new Questions_Adapter(Main_Test_Activity.this ,questions_jJavaList);
                 Log.e("no of questiobn","jsdajksd");
-                quelinrecy.setAdapter(questions_adapter);
+                //quelinrecy.setAdapter(questions_adapter);
             }
 
             @Override
