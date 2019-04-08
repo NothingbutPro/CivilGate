@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class Test_Question_Data {
     @SerializedName("id")
-
     @Expose
-    private String id;
+    private int id;
+
     @SerializedName("sub_id")
     @Expose
-    private String subId;
+    private int subId;
     @SerializedName("Que")
     @Expose
     private String que;
@@ -31,19 +31,19 @@ public class Test_Question_Data {
     private String ans;
     @SerializedName("minusmark")
     @Expose
-    private String minusmark;
+    private int minusmark;
     @SerializedName("marks")
     @Expose
-    private String marks;
+    private int marks;
     @SerializedName("solution")
     @Expose
     private String solution;
     @SerializedName("multiple_ans")
     @Expose
-    private String multipleAns;
+    private int multipleAns;
     @SerializedName("Status")
     @Expose
-    private String status;
+    private int status;
     @SerializedName("video")
     @Expose
     private String video;
@@ -53,8 +53,19 @@ public class Test_Question_Data {
     @SerializedName("Createdate")
     @Expose
     private String createdate;
+    @SerializedName("type")
+    @Expose
+    private int type;
 
-    public Test_Question_Data(String id, String subId, String que, String ans1, String ans2, String ans3, String ans4, String ans, String minusmark, String marks, String solution, String multipleAns, String status) {
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public Test_Question_Data(int id, int subId, String que, String ans1, String ans2, String ans3, String ans4, String ans, int minusmark, int marks, String solution, int multipleAns, int status,int type) {
         this.id = id;
         this.subId = subId;
         this.que = que;
@@ -68,21 +79,22 @@ public class Test_Question_Data {
         this.solution = solution;
         this.multipleAns = multipleAns;
         this.status = status;
+        this.type = type;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getSubId() {
+    public int getSubId() {
         return subId;
     }
 
-    public void setSubId(String subId) {
+    public void setSubId(int subId) {
         this.subId = subId;
     }
 
@@ -134,19 +146,19 @@ public class Test_Question_Data {
         this.ans = ans;
     }
 
-    public String getMinusmark() {
+    public int getMinusmark() {
         return minusmark;
     }
 
-    public void setMinusmark(String minusmark) {
+    public void setMinusmark(int minusmark) {
         this.minusmark = minusmark;
     }
 
-    public String getMarks() {
+    public int getMarks() {
         return marks;
     }
 
-    public void setMarks(String marks) {
+    public void setMarks(int marks) {
         this.marks = marks;
     }
 
@@ -158,19 +170,19 @@ public class Test_Question_Data {
         this.solution = solution;
     }
 
-    public String getMultipleAns() {
+    public int getMultipleAns() {
         return multipleAns;
     }
 
-    public void setMultipleAns(String multipleAns) {
+    public void setMultipleAns(int multipleAns) {
         this.multipleAns = multipleAns;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

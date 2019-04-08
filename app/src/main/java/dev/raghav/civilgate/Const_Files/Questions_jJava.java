@@ -3,15 +3,27 @@ package dev.raghav.civilgate.Const_Files;
 import android.provider.MediaStore;
 
 public class Questions_jJava {
-    int id ,sub_id ,minusmark,marks,solution,Status,Createdate;
-    MediaStore.Video video;
-    String Que,Ans_1,Ans_2,Ans_3,Ans_4,Ans,video_url;
+    int id ,sub_id ,minusmark,marks,Status,type;
+   String video;
+    String Que,Ans_1,Ans_2,Ans_3,Ans_4,solution,Ans,video_url,Createdate;
 
-    public Questions_jJava(int id) {
+    public Questions_jJava(int id ) {
         this.id = id;
     }
+    public Questions_jJava(int id , int type) {
+        this.id = id;
+        this.type = type;
+    }
 
-    public Questions_jJava(int id, int sub_id, int minusmark, int marks, int solution, int status, int createdate, MediaStore.Video video, String que, String video_url) {
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public Questions_jJava(int id, int sub_id, int minusmark, int marks, String solution, int status, String createdate, String video, String que, String video_url) {
         this.id = id;
         this.sub_id = sub_id;
         this.minusmark = minusmark;
@@ -24,7 +36,7 @@ public class Questions_jJava {
         this.video_url = video_url;
     }
 
-    public Questions_jJava(int id, int sub_id, int minusmark, int marks, int solution, int status, int createdate, MediaStore.Video video, String que, String ans_1, String ans_2, String ans_3, String ans_4, String ans, String video_url) {
+    public Questions_jJava(int id, int sub_id, int minusmark, int marks, String solution, int status, String createdate,String video, String que, String ans_1, String ans_2, String ans_3, String ans_4, String ans, String video_url) {
         this.id = id;
         this.sub_id = sub_id;
         this.minusmark = minusmark;
@@ -74,11 +86,11 @@ public class Questions_jJava {
         this.marks = marks;
     }
 
-    public int getSolution() {
+    public String getSolution() {
         return solution;
     }
 
-    public void setSolution(int solution) {
+    public void setSolution(String solution) {
         this.solution = solution;
     }
 
@@ -90,19 +102,19 @@ public class Questions_jJava {
         Status = status;
     }
 
-    public int getCreatedate() {
+    public String getCreatedate() {
         return Createdate;
     }
 
-    public void setCreatedate(int createdate) {
+    public void setCreatedate(String createdate) {
         Createdate = createdate;
     }
 
-    public MediaStore.Video getVideo() {
+    public String getVideo() {
         return video;
     }
 
-    public void setVideo(MediaStore.Video video) {
+    public void setVideo(String video) {
         this.video = video;
     }
 
